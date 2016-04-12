@@ -64,7 +64,7 @@ public class ServerCommProtocol {
                     e.printStackTrace();
                 }
                 //Log.e("server said", jsonData);
-                // dfds
+                // test
 
             }
 
