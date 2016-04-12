@@ -38,7 +38,6 @@ public class ServerCommProtocol {
 
     public interface DataListener {
         void onResponseError(String errorMessage);
-
     }
 
     public void invokeGetData(final String object, final String id, final DataListener dataListener) {
@@ -65,6 +64,7 @@ public class ServerCommProtocol {
                     e.printStackTrace();
                 }
                 //Log.e("server said", jsonData);
+                // dfds
 
             }
 
