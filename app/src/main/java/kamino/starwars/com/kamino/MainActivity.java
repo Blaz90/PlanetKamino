@@ -10,6 +10,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
+import kamino.starwars.com.kamino.model.HMAC;
 import kamino.starwars.com.kamino.model.PlanetKamino;
 import kamino.starwars.com.kamino.model.ServerCommProtocol;
 
@@ -21,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private static String mId;
 
     private Button button;
+    HMAC hmac;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +42,18 @@ public class MainActivity extends AppCompatActivity {
 
         mObject = "planets";
         mId = "10";
+
+        Log.d("string to hmac", sStringToHMACMD5("bla", "abcd"));
+
+        String[] arg = new String[0];
+
+        hmac = new HMAC();
+        try {
+            hmac.main(arg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         serverCommProtocol = new ServerCommProtocol();
         getData();
@@ -82,5 +103,32 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public static String sStringToHMACMD5(String s, String keyString) {
+        String sEncodedString = null;
+        try
+        {
+            SecretKeySpec key = new SecretKeySpec((keyString).getBytes("UTF-8"), "HmacMD5");
+            Mac mac = Mac.getInstance("HmacMD5");
+            mac.init(key);
+
+            byte[] bytes = mac.doFinal(s.getBytes("ASCII"));
+
+            StringBuffer hash = new StringBuffer();
+
+            for (int i=0; i<bytes.length; i++) {
+                String hex = Integer.toHexString(0xFF &  bytes[i]);
+                if (hex.length() == 1) {
+                    hash.append('0');
+                }
+                hash.append(hex);
+            }
+            sEncodedString = hash.toString();
+        }
+        catch (UnsupportedEncodingException e) {}
+        catch(InvalidKeyException e){}
+        catch (NoSuchAlgorithmException e) {}
+        return sEncodedString ;
     }
 }

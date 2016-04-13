@@ -20,7 +20,7 @@ public class PlanetKamino {
     private String mEdited;
     private String mImageUrl;
     private String mLikes;
-    private ArrayList arrayIds;
+    private ArrayList mArrayIds;
 
 
     public String getName() {
@@ -128,10 +128,10 @@ public class PlanetKamino {
     }
 
     public ArrayList getArrayIds() {
-        return arrayIds;
+        return mArrayIds;
     }
 
     public void setArrayIds(ArrayList arrayIds) {
-        this.arrayIds = arrayIds;
+        this.mArrayIds = arrayIds;
     }
 }
