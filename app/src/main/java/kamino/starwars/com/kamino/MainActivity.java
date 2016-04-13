@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         serverCommProtocol = new ServerCommProtocol();
         getData();
 
-        /*button.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 serverCommProtocol.invokeSendData(mObject, mId, new ServerCommProtocol.DataListener() {
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
                 });
             }
-        });*/
+        });
     }
 
     private void getData() {
