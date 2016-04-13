@@ -20,8 +20,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.ws.rs.client.Entity;
+
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.HttpEntity;
 import cz.msebera.android.httpclient.entity.StringEntity;
+import cz.msebera.android.httpclient.message.BasicHeader;
+import cz.msebera.android.httpclient.protocol.HTTP;
 import kamino.starwars.com.kamino.MainActivity;
 
 
@@ -35,8 +40,9 @@ public class ServerCommProtocol extends Activity {
 
     private PlanetKamino mPlanetKamino;
     private ResidentKamino mResidentKamino;
-
+    StringEntity entity;
     ProgressDialog prgDialog;
+    ArrayList<String> arrayList;
 
     public interface DataListener {
         void onResponseError(String errorMessage);
@@ -88,22 +94,20 @@ public class ServerCommProtocol extends Activity {
         });
     }
 
-    public void invokeSendData(String number, final String object, final String id, final DataListener dataListener) {
+    public void invokeSendData(final String object, final String id, final DataListener dataListener) {
         // Show Progress Dialog
         if (prgDialog != null) prgDialog.show();
 
-        RequestParams params = new RequestParams();
-        //params.add("planet_id", "10");
-        //params.add("likes ", "11");
-        /*try {
-            StringEntity entity = new StringEntity("{  'planet_id': 10}");
-        } catch (UnsupportedEncodingException e) {
+        try {
+            entity = new StringEntity("{  'planet_id': 10}", "UTF-8");
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
-        }*/
+            return;
+        }
 
         // Make RESTful webservice call using AsyncHttpClient object
         AsyncHttpClient client = new AsyncHttpClient();
-        client.post(API_BASE_URL + object + "/" + id + "/like", params, new AsyncHttpResponseHandler() {
+        client.post(this, API_BASE_URL + object + "/" + id + "/like", entity, "application/json", new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 if (prgDialog != null) prgDialog.hide();
@@ -111,11 +115,10 @@ public class ServerCommProtocol extends Activity {
                 String jsonData = "";
                 try {
                     jsonData = new String(responseBody, "UTF-8"); // for UTF-8 encoding
-                    Log.d("jsonData", "OnSuccess..." + jsonData);
+                    //Log.d("jsonData", "OnSuccess..." + jsonData);
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                //Log.e("server said", jsonData);
             }
 
             @Override
@@ -178,23 +181,34 @@ public class ServerCommProtocol extends Activity {
         planetKamino.setImageUrl(planet.getString("image_url"));
         planetKamino.setLikes(planet.getString("likes"));
 
-        // get all ids of residents
-        JSONArray jsonArray = planet.getJSONArray("residents");
+        getJsonArray(planet);
+        planetKamino.setArrayIds(arrayList);
 
-        ArrayList<String> arrayList = new ArrayList<String>();
+        return planetKamino;
+    }
+
+    private void getJsonArray(JSONObject jsonObject){
+        JSONArray jsonArray;
+        try {
+            jsonArray = jsonObject.getJSONArray("residents");
+        } catch (JSONException e){
+            e.printStackTrace();
+            return;
+        }
+        arrayList = new ArrayList<String>();
 
         for (int i = 0; i < jsonArray.length(); i++) {
-            String str = jsonArray.get(i).toString();
+            String str = null;
+            try {
+                str = jsonArray.get(i).toString();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             String id = str.substring(str.lastIndexOf("/") + 1);
             boolean contains = arrayList.contains(id);
             if (!contains) {
                 arrayList.add(i, id);
             }
         }
-        Log.d("i", "ArrayList " + arrayList);
-
-        planetKamino.setArrayIds(arrayList);
-
-        return planetKamino;
     }
 }
