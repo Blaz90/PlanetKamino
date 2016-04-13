@@ -1,8 +1,9 @@
 package kamino.starwars.com.kamino.model;
 
+import android.app.Activity;
+import android.app.Application;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Entity;
+import android.os.Message;
 import android.util.Log;
 import android.widget.ListView;
 
@@ -14,19 +15,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
+import kamino.starwars.com.kamino.MainActivity;
 
 
 /**
  * Created by Blaž on 11.04.2016.
  */
-public class ServerCommProtocol {
+public class ServerCommProtocol extends Activity {
     private final static String LOG_TAG = ".ServerCommProtocol";
 
     private final static String API_BASE_URL = "http://private-anon-ffc6f083f-starwars2.apiary-mock.com/";
@@ -53,9 +55,9 @@ public class ServerCommProtocol {
                 String jsonData = "";
                 try {
                     jsonData = new String(responseBody, "UTF-8"); // for UTF-8 encoding
-                    if (object == "planets") {
+                    if (object.equals("planets")) {
                         mPlanetKamino = getPlanetDetails(jsonData);
-                    } else if (object == "residents") {
+                    } else if (object.equals("residents")) {
                         mResidentKamino = getResidentDetails(jsonData);
                     }
                 } catch (UnsupportedEncodingException e) {
@@ -64,8 +66,6 @@ public class ServerCommProtocol {
                     e.printStackTrace();
                 }
                 //Log.e("server said", jsonData);
-                // test
-
             }
 
             @Override
@@ -93,13 +93,13 @@ public class ServerCommProtocol {
         if (prgDialog != null) prgDialog.show();
 
         RequestParams params = new RequestParams();
-        params.add("likes", number);
-
-        try {
+        //params.add("planet_id", "10");
+        //params.add("likes ", "11");
+        /*try {
             StringEntity entity = new StringEntity("{  'planet_id': 10}");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-        }
+        }*/
 
         // Make RESTful webservice call using AsyncHttpClient object
         AsyncHttpClient client = new AsyncHttpClient();
@@ -181,24 +181,19 @@ public class ServerCommProtocol {
         // get all ids of residents
         JSONArray jsonArray = planet.getJSONArray("residents");
 
-        String[] arrayIds = new String[jsonArray.length()];
-        List<String> dan = Arrays.asList(arrayIds);
+        ArrayList<String> arrayList = new ArrayList<String>();
 
         for (int i = 0; i < jsonArray.length(); i++) {
             String str = jsonArray.get(i).toString();
             String id = str.substring(str.lastIndexOf("/") + 1);
-            //Log.d("jsonArray", "loop " + id);
-            boolean contains = dan.contains(id);
-            //Log.d("boolean", ": " + contains + ", " + dan);
+            boolean contains = arrayList.contains(id);
             if (!contains) {
-                arrayIds[i] = id;
-                //Log.d("i", "i " + i);
+                arrayList.add(i, id);
             }
         }
+        Log.d("i", "ArrayList " + arrayList);
 
-        //Log.d("jsonArray", " " + planet.getString("likes"));
-
-        planetKamino.setArrayIds(arrayIds);
+        planetKamino.setArrayIds(arrayList);
 
         return planetKamino;
     }

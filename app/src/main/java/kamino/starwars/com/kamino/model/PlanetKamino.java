@@ -1,5 +1,7 @@
 package kamino.starwars.com.kamino.model;
 
+import java.util.ArrayList;
+
 /**
  * Created by blazzajec on 11/04/16.
  */
@@ -18,7 +20,7 @@ public class PlanetKamino {
     private String mEdited;
     private String mImageUrl;
     private String mLikes;
-    private String[] arrayIds;
+    private ArrayList arrayIds;
 
 
     public String getName() {
@@ -125,11 +127,11 @@ public class PlanetKamino {
         mImageUrl = imageUrl;
     }
 
-    public String[] getArrayIds() {
+    public ArrayList getArrayIds() {
         return arrayIds;
     }
 
-    public void setArrayIds(String[] arrayIds) {
+    public void setArrayIds(ArrayList arrayIds) {
         this.arrayIds = arrayIds;
     }
 }
