@@ -10,20 +10,111 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="kamino.starwars.com.kamino.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_main"
+                android:background="#000405">
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/planetImage"
+        android:src="@drawable/eaw_kamino"
+        android:layout_below="@+id/planetName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:background="#784C2F"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:id="@+id/textView"/>
+        android:text="@string/planet_name"
+        android:id="@+id/planetName"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white"
+        android:textSize="32sp"/>
 
-    <Button
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:id="@+id/likeLayout"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/likeValueLayout"
+            android:layout_marginRight="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="123"
+                android:id="@+id/likeValue"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:gravity="center_vertical"
+                android:phoneNumber="true"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:id="@+id/likeImageLayout"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/likeImage"
+                android:src="@drawable/like_flat"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:text="@string/population_label"
+        android:id="@+id/populationLabel"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/planetImage"
+        android:layout_marginTop="15dp"
+        style="@style/label"/>
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
-        android:layout_below="@+id/textView"
+        android:text="1000000000"
+        android:id="@+id/textView"
+        android:layout_below="@+id/populationLabel"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp"/>
+        android:layout_marginTop="5dp"
+        android:textSize="26sp"
+        android:textColor="@android:color/white"/>
+
+    <TextView
+        android:text="@string/rotation_period_label"
+        android:id="@+id/rotationPeriodLabel"
+        android:layout_alignTop="@+id/planetImage"
+        android:layout_toRightOf="@+id/planetImage"
+        style="@style/label"
+        android:layout_toEndOf="@+id/planetImage"
+        android:layout_marginLeft="15dp"
+        android:gravity="start"/>
+
+    <TextView
+        android:text="@string/orbital_period_label"
+        android:id="@+id/orbitalPeriodLabel"
+        style="@style/label"
+        android:layout_alignTop="@+id/planetImage"
+        android:layout_toLeftOf="@+id/planetImage"
+        android:layout_toStartOf="@+id/planetImage"
+        android:layout_marginRight="15dp"
+        android:gravity="end"/>
+
 </RelativeLayout>

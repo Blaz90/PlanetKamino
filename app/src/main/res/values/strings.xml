@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Kamino</string>
+    <string name="planet_name">Kamino</string>
     <string name="action_settings">Settings</string>
+    <string name="population_label">Population</string>
+    <string name="rotation_period_label">Rotation period</string>
+    <string name="orbital_period_label">Orbital period</string>
 </resources>
