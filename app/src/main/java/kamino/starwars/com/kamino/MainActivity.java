@@ -3,6 +3,7 @@ package kamino.starwars.com.kamino;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Config;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,15 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-
-import kamino.starwars.com.kamino.model.HMAC;
-import kamino.starwars.com.kamino.model.PlanetKamino;
 import kamino.starwars.com.kamino.model.ServerCommProtocol;
 
 
@@ -41,17 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
         mObject = "planets";
         mId = "10";
-
-        Log.d("string to hmac", HMAC.sStringToHMACMD5("key", "abcd"));
-
-        String[] arg = new String[0];
-
-        try {
-            HMAC.main(arg);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
 
         serverCommProtocol = new ServerCommProtocol();
         getData();

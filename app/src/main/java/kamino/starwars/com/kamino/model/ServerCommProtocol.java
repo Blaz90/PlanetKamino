@@ -3,7 +3,9 @@ package kamino.starwars.com.kamino.model;
 import android.app.Activity;
 import android.app.Application;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Message;
+import android.util.Config;
 import android.util.Log;
 import android.widget.ListView;
 
@@ -16,10 +18,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
+import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 
 import cz.msebera.android.httpclient.Header;
@@ -37,11 +42,11 @@ public class ServerCommProtocol extends Activity {
     private final static String LOG_TAG = ".ServerCommProtocol";
 
     private final static String API_BASE_URL = "http://private-anon-ffc6f083f-starwars2.apiary-mock.com/";
+    String API_REQ_URL;
 
     private PlanetKamino mPlanetKamino;
     private ResidentKamino mResidentKamino;
     StringEntity entity;
-    ProgressDialog prgDialog;
     ArrayList<String> arrayList;
 
     public interface DataListener {
@@ -49,14 +54,13 @@ public class ServerCommProtocol extends Activity {
     }
 
     public void invokeGetData(final String object, final String id, final DataListener dataListener) {
-        // Show Progress Dialog
-        if (prgDialog != null) prgDialog.show();
+        API_REQ_URL = API_BASE_URL + object + "/" + id;
         // Make RESTful webservice call using AsyncHttpClient object
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get(API_BASE_URL + object + "/" + id, new AsyncHttpResponseHandler() {
+        hmacAuthentication(client);
+        client.get(API_REQ_URL, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                if (prgDialog != null) prgDialog.hide();
 
                 String jsonData = "";
                 try {
@@ -76,8 +80,6 @@ public class ServerCommProtocol extends Activity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                // Hide Progress Dialog
-                if (prgDialog != null) prgDialog.hide();
                 // When Http response code is '404'
                 if (statusCode == 404) {
                     dataListener.onResponseError("Requested resource not found");
@@ -95,22 +97,19 @@ public class ServerCommProtocol extends Activity {
     }
 
     public void invokeSendData(final String object, final String id, final DataListener dataListener) {
-        // Show Progress Dialog
-        if (prgDialog != null) prgDialog.show();
-
+        API_REQ_URL = API_BASE_URL + object + "/" + id  + "/like";
         try {
             entity = new StringEntity("{  'planet_id': 10}", "UTF-8");
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
             return;
         }
-
         // Make RESTful webservice call using AsyncHttpClient object
         AsyncHttpClient client = new AsyncHttpClient();
-        client.post(this, API_BASE_URL + object + "/" + id + "/like", entity, "application/json", new AsyncHttpResponseHandler() {
+        hmacAuthentication(client);
+        client.post(this, API_REQ_URL, entity, "application/json", new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                if (prgDialog != null) prgDialog.hide();
 
                 String jsonData = "";
                 try {
@@ -123,8 +122,6 @@ public class ServerCommProtocol extends Activity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                // Hide Progress Dialog
-                if (prgDialog != null) prgDialog.hide();
                 // When Http response code is '404'
                 if (statusCode == 404) {
                     dataListener.onResponseError("Requested resource not found");
@@ -139,6 +136,14 @@ public class ServerCommProtocol extends Activity {
                 }
             }
         });
+    }
+
+    protected void hmacAuthentication(AsyncHttpClient client){
+        // keyString of value is "abcd"
+        // and string header is HMAC for now
+        String value = HMAC.sStringToHMACMD5("key", "abcd");
+        client.addHeader("HMAC", value);
+        //Log.d("hmac",value);
     }
 
     private ResidentKamino getResidentDetails(String jsonData) throws JSONException {
