@@ -37,10 +37,10 @@ public class MainActivity extends AppCompatActivity {
         serverCommProtocol = new ServerCommProtocol();
         getData();
 
-        /*button.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                serverCommProtocol.invokeSendData("11", mObject, mId, new ServerCommProtocol.DataListener() {
+                serverCommProtocol.invokeSendData(mObject, mId, new ServerCommProtocol.DataListener() {
                     @Override
                     public void onResponseError(String errorMessage) {
                         Log.e("response", errorMessage);
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
                 });
             }
-        });*/
+        });
     }
 
     private void getData() {
@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("response", errorMessage);
                 Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_LONG).show();
             }
-
         });
     }
 
