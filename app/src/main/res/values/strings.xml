@@ -23,6 +23,10 @@
     <string name="eye_color_label">Eye color</string>
     <string name="other_data_label">Other data</string>
     <string name="empty_value">/</string>
+    <string name="title_activity_activity_image">/</string>
+    <string name="title_activity_kamino_picture">/</string>
+    <string name="title_activity_main2">/</string>
+
 
 
 </resources>
