@@ -37,7 +37,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Jože Potrebuješ"
+                    android:text="@string/empty_value"
                     android:id="@+id/residentName"
                     style="@style/resident_name_list"/>
 
@@ -57,7 +57,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="mixed"
+                        android:text="@string/empty_value"
                         android:id="@+id/genderValue"
                         android:layout_marginLeft="5dp"
                         style="@style/value_small"
@@ -83,7 +83,7 @@
                         style="@style/value_small"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="1968"
+                        android:text="@string/empty_value"
                         android:id="@+id/birthYearValue"
                         android:layout_marginLeft="5dp"
                         android:gravity="center_vertical"/>
@@ -108,7 +108,7 @@
                         style="@style/value_small"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Earth"
+                        android:text="@string/empty_value"
                         android:id="@+id/homeworldValue"
                         android:layout_marginLeft="5dp"
                         android:gravity="center_vertical"/>
@@ -137,19 +137,25 @@
         android:layout_marginLeft="10dp"
         android:layout_below="@+id/otherDataLabel">
 
-        <TableRow style="@style/basic_info">
+        <TableRow style="@style/basic_info"
+                  android:layout_width="match_parent">
             <TextView
-                android:layout_column="1"
                 android:text="@string/height_label"
                 android:padding="3dip"
                 style="@style/label"
-                android:id="@+id/heightLabel"/>
+                android:id="@+id/heightLabel"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_column="1"
+                />
             <TextView
-                android:text="/"
-                android:gravity="right"
                 android:padding="3dip"
                 style="@style/value_small"
-                android:id="@+id/heightValue"/>
+                android:id="@+id/heightValue"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/empty_value"/>
         </TableRow>
 
         <TableRow
@@ -164,16 +170,18 @@
                 android:padding="3dip"
                 android:id="@+id/massLabel"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                />
 
             <TextView
                 style="@style/value_small"
-                android:text="/"
-                android:gravity="right"
+                android:text="@string/empty_value"
                 android:padding="3dip"
                 android:id="@+id/massValue"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                />
         </TableRow>
 
         <TableRow
@@ -188,16 +196,17 @@
                 android:padding="3dip"
                 android:id="@+id/hairColorLabel"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                />
 
             <TextView
                 style="@style/value_small"
-                android:text="/"
-                android:gravity="right"
+                android:text="@string/empty_value"
                 android:padding="3dip"
                 android:id="@+id/hairColorValue"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
         </TableRow>
 
         <TableRow
@@ -212,16 +221,17 @@
                 android:padding="3dip"
                 android:id="@+id/skinColorLabel"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                />
 
             <TextView
                 style="@style/value_small"
-                android:text="/"
-                android:gravity="right"
+                android:text="@string/empty_value"
                 android:padding="3dip"
                 android:id="@+id/skinColorValue"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
         </TableRow>
 
         <TableRow
@@ -236,16 +246,17 @@
                 android:padding="3dip"
                 android:id="@+id/eyeColorLabel"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                />
 
             <TextView
                 style="@style/value_small"
-                android:text="/"
-                android:gravity="right"
+                android:text="@string/empty_value"
                 android:padding="3dip"
                 android:id="@+id/eyeColorValue"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
         </TableRow>
 
         <TableRow
@@ -260,16 +271,17 @@
                 android:padding="3dip"
                 android:id="@+id/createdLabel"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                />
 
             <TextView
                 style="@style/value_small"
-                android:text="/"
-                android:gravity="right"
+                android:text="@string/empty_value"
                 android:padding="3dip"
                 android:id="@+id/createdValue"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
         </TableRow>
 
         <TableRow
@@ -284,16 +296,17 @@
                 android:padding="3dip"
                 android:id="@+id/editedLabel"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                />
 
             <TextView
                 style="@style/value_small"
-                android:text="/"
-                android:gravity="right"
+                android:text="@string/empty_value"
                 android:padding="3dip"
                 android:id="@+id/editedValue"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
         </TableRow>
 
     </TableLayout>

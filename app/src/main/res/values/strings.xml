@@ -22,6 +22,7 @@
     <string name="skin_color_label">Skin color</string>
     <string name="eye_color_label">Eye color</string>
     <string name="other_data_label">Other data</string>
+    <string name="empty_value">/</string>
 
 
 </resources>
