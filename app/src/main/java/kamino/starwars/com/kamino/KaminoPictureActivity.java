@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.InputStream;
 
 public class KaminoPictureActivity extends AppCompatActivity {
@@ -27,9 +29,11 @@ public class KaminoPictureActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String planetImage = intent.getStringExtra("image");
+        Bitmap bitmap = intent.getParcelableExtra("bitmap");
 
         planetBigImage = (ImageView)findViewById(R.id.planetBigImage);
-        new ImageDownloader(planetBigImage).execute(planetImage);
+        //planetBigImage.setImageBitmap(bitmap);
+        Picasso.with(getApplicationContext()).load(planetImage).into(planetBigImage);
 
     }
 

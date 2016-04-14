@@ -2,6 +2,7 @@ package kamino.starwars.com.kamino.model;
 
 import android.app.Activity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
