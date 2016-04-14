@@ -13,4 +13,6 @@
     <string name="gravity_label">Gravity</string>
     <string name="created_label">Created</string>
     <string name="edited_label">Edited</string>
+    <string name="title_activity_activity_image">ActivityImage</string>
+    <string name="title_activity_kamino_picture">KaminoPictureActivity</string>
 </resources>
