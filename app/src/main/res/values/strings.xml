@@ -6,11 +6,22 @@
     <string name="rotation_period_label">Rotation period</string>
     <string name="orbital_period_label">Orbital period</string>
     <string name="diameter_label">Diameter</string>
-    <string name="residents_label">Residents</string>
     <string name="climate_label">Climate</string>
     <string name="terrain_label">Terrain</string>
     <string name="surface_label">Surface water</string>
     <string name="gravity_label">Gravity</string>
     <string name="created_label">Created</string>
     <string name="edited_label">Edited</string>
+    <string name="gender_label">Gender:</string>
+    <string name="birth_year_label">Birth year:</string>
+    <string name="homeworld_label">Homeworld:</string>
+    <string name="height_label">Height</string>
+    <string name="mass_label">Mass</string>
+    <string name="hair_color_label">Hair color</string>
+    <string name="skin_color_label">Skin color</string>
+    <string name="eye_color_label">Eye color</string>
+    <string name="other_data_label">Other data</string>
+    <string name="empty_value">/</string>
+
+
 </resources>
