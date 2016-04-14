@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import kamino.starwars.com.kamino.model.ServerCommProtocol;
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private static String mObject;
     private static String mId;
 
-    private Button button;
+    private ImageView likeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
         serverCommProtocol = new ServerCommProtocol();
         getData();
 
-        button.setOnClickListener(new View.OnClickListener() {
+        likeButton = (ImageView)findViewById(R.id.likeImage);
+        likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 serverCommProtocol.invokeSendData(mObject, mId, new ServerCommProtocol.DataListener() {
