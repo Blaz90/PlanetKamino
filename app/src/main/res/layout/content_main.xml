@@ -26,7 +26,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/planet_name"
+        android:text="@string/empty_value"
         android:id="@+id/planetName"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -55,7 +55,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="123"
+                android:text="@string/empty_value"
                 android:id="@+id/likeValue"
                 android:textColor="@android:color/white"
                 android:gravity="center_vertical"
@@ -92,7 +92,7 @@
         style="@style/label"/>
 
     <TextView
-        android:text="1230000321"
+        android:text="@string/empty_value"
         android:id="@+id/populationValue"
         android:layout_below="@+id/populationLabel"
         android:layout_centerHorizontal="true"
@@ -121,7 +121,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="63"
+        android:text="@string/empty_value"
         android:id="@+id/rotationPeriodValue"
         android:layout_below="@+id/rotationPeriodLabel"
         android:layout_alignLeft="@+id/rotationPeriodLabel"
@@ -131,7 +131,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="722"
+        android:text="@string/empty_value"
         android:id="@+id/orbitalPeriodValue"
         style="@style/value"
         android:layout_below="@+id/orbitalPeriodLabel"
@@ -151,7 +151,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="12345"
+        android:text="@string/empty_value"
         android:id="@+id/diameterValue"
         android:layout_alignBottom="@+id/planetImage"
         android:layout_toRightOf="@+id/planetImage"
@@ -162,8 +162,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="450"
-        android:id="@+id/residentsValue"
+        android:text="@string/empty_value"
+        android:id="@+id/gravityValue"
         style="@style/value"
         android:layout_alignBottom="@+id/planetImage"
         android:layout_toLeftOf="@+id/planetImage"
@@ -173,12 +173,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/residents_label"
-        android:id="@+id/residentsLabel"
+        android:text="@string/gravity_label"
+        android:id="@+id/gravityLabel"
         style="@style/label"
-        android:layout_above="@+id/residentsValue"
-        android:layout_alignRight="@+id/residentsValue"
-        android:layout_alignEnd="@+id/residentsValue"/>
+        android:layout_above="@+id/gravityValue"
+        android:layout_alignRight="@+id/gravityValue"
+        android:layout_alignEnd="@+id/gravityValue"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -208,7 +208,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Super duper"
+                android:text="@string/empty_value"
                 android:id="@+id/climateValue"
                 style="@style/value_small"
                 android:gravity="center_horizontal"/>
@@ -232,7 +232,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Magma"
+                android:text="@string/empty_value"
                 android:id="@+id/terrainValue"
                 style="@style/value_small"
                 android:gravity="center_horizontal"/>
@@ -256,7 +256,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="666"
+                android:text="@string/empty_value"
                 android:id="@+id/surfaceValue"
                 style="@style/value_small"
                 android:gravity="center_horizontal"/>
@@ -291,7 +291,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="10:12:2095 at \n12:45:07"
+                android:text="@string/empty_value"
                 android:id="@+id/createdValue"
                 android:gravity="center_horizontal"
                 style="@style/value_small"/>
@@ -315,39 +315,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="20:12:2095 at\n 20:58:18"
+                android:text="@string/empty_value"
                 android:id="@+id/editedValue"
                 android:gravity="center_horizontal"
                 style="@style/value_small"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/gravityLayout"
-            android:layout_weight="1"
-            >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/gravity_label"
-                android:id="@+id/gravityLabel"
-                android:layout_below="@+id/geoLayout"
-                android:layout_centerHorizontal="true"
-                style="@style/label_small"
-                android:gravity="center_horizontal"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="W Heavy"
-                android:id="@+id/gravityValue"
-                android:layout_below="@+id/gravityLabel"
-                android:layout_centerHorizontal="true"
-                style="@style/value_small"
-                android:gravity="center_horizontal"/>
         </LinearLayout>
 
     </LinearLayout>

@@ -88,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     // Get all data from API and save it in PlanetKamino or ResidentsKamino.
