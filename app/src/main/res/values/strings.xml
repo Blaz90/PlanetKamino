@@ -15,4 +15,5 @@
     <string name="edited_label">Edited</string>
     <string name="title_activity_activity_image">ActivityImage</string>
     <string name="title_activity_kamino_picture">KaminoPictureActivity</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>

@@ -1,4 +1,4 @@
-package kamino.starwars.com.kamino;
+package kamino.starwars.com.kamino.UI;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,10 +17,12 @@ import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
 
-public class KaminoPictureActivity extends AppCompatActivity {
+import kamino.starwars.com.kamino.MainActivity;
+import kamino.starwars.com.kamino.R;
+
+public class BigImageActivity extends AppCompatActivity {
 
     ImageView planetBigImage;
-    MainActivity mMainActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,35 +31,9 @@ public class KaminoPictureActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String planetImage = intent.getStringExtra("image");
-        Bitmap bitmap = intent.getParcelableExtra("bitmap");
 
         planetBigImage = (ImageView)findViewById(R.id.planetBigImage);
-        //planetBigImage.setImageBitmap(bitmap);
         Picasso.with(getApplicationContext()).load(planetImage).into(planetBigImage);
 
-    }
-
-    class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public ImageDownloader(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String url = urls[0];
-            Bitmap mIcon = null;
-            try {
-                InputStream in = new java.net.URL(url).openStream();
-                mIcon = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-            }
-            return mIcon;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
     }
 }

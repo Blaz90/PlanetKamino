@@ -32,8 +32,13 @@
                 android:value="kamino.starwars.com.kamino.MainActivity"/>
         </activity>
         <activity
-            android:name=".KaminoPictureActivity"
+            android:name=".UI.BigImageActivity"
             android:label="@string/title_activity_kamino_picture"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>

@@ -22,8 +22,8 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 /**
  * Created by Blaž on 11.04.2016.
  */
-public class ServerCommProtocol extends Activity {
-    private final static String LOG_TAG = ".ServerCommProtocol";
+public class Networking extends Activity {
+    private final static String LOG_TAG = ".Networking";
 
     private final static String API_BASE_URL = "http://private-anon-ffc6f083f-starwars2.apiary-mock.com/";
     String API_REQ_URL;

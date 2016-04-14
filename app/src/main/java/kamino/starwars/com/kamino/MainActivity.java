@@ -1,74 +1,77 @@
 package kamino.starwars.com.kamino;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Config;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import com.squareup.picasso.Picasso;
 
+import kamino.starwars.com.kamino.UI.BigImageActivity;
+import kamino.starwars.com.kamino.model.Networking;
 import kamino.starwars.com.kamino.model.PlanetKamino;
-import kamino.starwars.com.kamino.model.ServerCommProtocol;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    ServerCommProtocol serverCommProtocol;
-    PlanetKamino mPlanetKamino;
-    private static String mObject;
-    private static String mId;
-
-    private ImageView likeButton;
-    private String imageUrl;
-
-    boolean clicked = false;
+    Networking mNetworking;
+    private String mObject;
+    private String mId;
+    private ImageView mLikeButton;
+    private ImageView mPlanetImage;
+    private String mImageUrl;
+    private boolean mClicked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mClicked = false;
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Toast.makeText(MainActivity.this, "Loading data..", Toast.LENGTH_LONG).show();
-        ImageView planetImage = (ImageView)findViewById(R.id.planetImage);
-        likeButton = (ImageView)findViewById(R.id.likeImage);
-        likeButton.setClickable(true);
 
-        mObject = "planets";
-        mId = "10";
-
-        serverCommProtocol = new ServerCommProtocol();
         getData();
+        bigImageListener();
+        likePlanetListener();
 
-        planetImage.setOnClickListener(new View.OnClickListener() {
+    }
+
+    // This method listens for user click on planet image
+    private void bigImageListener() {
+        mPlanetImage = (ImageView)findViewById(R.id.planetImage);
+        mPlanetImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openImage();
             }
         });
+    }
 
-        likeButton.setOnClickListener(new View.OnClickListener() {
+    // This method opens BigImage activity on planet image click
+    private void openImage() {
+        Intent intent = new Intent(this, BigImageActivity.class);
+        intent.putExtra("image", mImageUrl);
+        startActivity(intent);
+    }
+
+    // This method listens for user click on like
+    private void likePlanetListener(){
+        mLikeButton = (ImageView)findViewById(R.id.likeImage);
+        mLikeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!clicked) {
-                    Log.d("like", "like!!!!");
-                    clicked = true;
-                    serverCommProtocol.invokeSendData(mObject, mId, new ServerCommProtocol.DataListener() {
+                if (!mClicked) {
+                    mClicked = true;
+                    mNetworking.invokeSendData(mObject, mId, new Networking.DataListener() {
                         @Override
                         public void onResponseError(String errorMessage) {
                             Log.e("response", errorMessage);
@@ -78,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onResponseSuccess(PlanetKamino planetKamino) {
                             updateDisplay(planetKamino);
-                            likeButton.setOnClickListener(null);
                         }
 
                     });
@@ -86,16 +88,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
-    private void openImage() {
-        Intent intent = new Intent(this, KaminoPictureActivity.class);
-        intent.putExtra("image", imageUrl);
-        startActivity(intent);
-    }
-
+    // Get all data from API and save it in PlanetKamino or ResidentsKamino.
     private void getData() {
-        serverCommProtocol.invokeGetData(mObject, mId, new ServerCommProtocol.DataListener() {
+        Toast.makeText(MainActivity.this, "Loading data..", Toast.LENGTH_SHORT).show();
+        mObject = "planets";
+        mId = "10";
+        mNetworking = new Networking();
+        mNetworking.invokeGetData(mObject, mId, new Networking.DataListener() {
             @Override
             public void onResponseError(String errorMessage) {
                 Log.e("response", errorMessage);
@@ -110,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // When data is succesfuly received, display it on screen
     public void updateDisplay(PlanetKamino planetKamino) {
         TextView planetName = (TextView)findViewById(R.id.planetName);
         TextView rotationPeriod = (TextView)findViewById(R.id.rotationPeriodValue);
@@ -137,32 +140,9 @@ public class MainActivity extends AppCompatActivity {
         created.setText(planetKamino.getCreated());
         edited.setText(planetKamino.getEdited());
         like.setText(planetKamino.getLikes());
-        imageUrl = planetKamino.getImageUrl();
-        new ImageDownloader(image).execute(imageUrl);
-    }
+        mImageUrl = planetKamino.getImageUrl();
 
-    class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public ImageDownloader(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String url = urls[0];
-            Bitmap mIcon = null;
-            try {
-                InputStream in = new java.net.URL(url).openStream();
-                mIcon = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-            }
-            return mIcon;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
+        Picasso.with(getApplicationContext()).load(mImageUrl).into(image);
     }
 
     @Override
