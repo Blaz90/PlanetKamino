@@ -28,6 +28,6 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'javax.ws.rs:javax.ws.rs-api:2.0.1'
-    //compile files('libs/jersey-client-2.8.jar')
-    //compile files('libs/jersey-media-json-jackson-2.8.jar')
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }

@@ -1,45 +1,29 @@
 package kamino.starwars.com.kamino.model;
 
 import android.app.Activity;
-import android.app.Application;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.os.Message;
-import android.util.Config;
 import android.util.Log;
-import android.widget.ListView;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
-
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.Entity;
+import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.HttpEntity;
 import cz.msebera.android.httpclient.entity.StringEntity;
-import cz.msebera.android.httpclient.message.BasicHeader;
-import cz.msebera.android.httpclient.protocol.HTTP;
-import kamino.starwars.com.kamino.MainActivity;
 
 
 /**
  * Created by Blaž on 11.04.2016.
  */
-public class ServerCommProtocol extends Activity {
-    private final static String LOG_TAG = ".ServerCommProtocol";
+public class Networking extends Activity {
+    private final static String LOG_TAG = ".Networking";
 
     private final static String API_BASE_URL = "http://private-anon-ffc6f083f-starwars2.apiary-mock.com/";
     String API_REQ_URL;
@@ -51,6 +35,7 @@ public class ServerCommProtocol extends Activity {
 
     public interface DataListener {
         void onResponseError(String errorMessage);
+        void onResponseSuccess(PlanetKamino planetKamino);
     }
 
     public void invokeGetData(final String object, final String id, final DataListener dataListener) {
@@ -58,6 +43,7 @@ public class ServerCommProtocol extends Activity {
         // Make RESTful webservice call using AsyncHttpClient object
         AsyncHttpClient client = new AsyncHttpClient();
         hmacAuthentication(client);
+
         client.get(API_REQ_URL, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -70,6 +56,16 @@ public class ServerCommProtocol extends Activity {
                     } else if (object.equals("residents")) {
                         mResidentKamino = getResidentDetails(jsonData);
                     }
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //mMainActivity.updateDisplay(mPlanetKamino);
+                            //mUpdateData.updateDisplay(mPlanetKamino);
+                            //getData();
+                            dataListener.onResponseSuccess(mPlanetKamino);
+                        }
+                    });
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -90,7 +86,7 @@ public class ServerCommProtocol extends Activity {
                 }
                 // When Http response code other than 404, 500
                 else {
-                    dataListener.onResponseError("Unexpected Error occcured! Device might not be connected to Internet or remote server is not up and running");
+                    dataListener.onResponseError("No Internet connection");
                 }
             }
         });
@@ -114,7 +110,6 @@ public class ServerCommProtocol extends Activity {
                 String jsonData = "";
                 try {
                     jsonData = new String(responseBody, "UTF-8"); // for UTF-8 encoding
-                    //Log.d("jsonData", "OnSuccess..." + jsonData);
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
@@ -132,7 +127,7 @@ public class ServerCommProtocol extends Activity {
                 }
                 // When Http response code other than 404, 500
                 else {
-                    dataListener.onResponseError("Unexpected Error occcured! Device might not be connected to Internet or remote server is not up and running");
+                    dataListener.onResponseError("No Internet connection");
                 }
             }
         });
