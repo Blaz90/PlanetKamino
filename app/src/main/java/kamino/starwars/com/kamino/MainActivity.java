@@ -29,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        button = (Button)findViewById(R.id.button);
-
         mObject = "planets";
         mId = "10";
 

@@ -10,20 +10,346 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="kamino.starwars.com.kamino.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_main"
+    >
+
+    <ImageView
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:id="@+id/planetImage"
+        android:src="@drawable/no_image_available"
+        android:layout_below="@+id/planetName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:id="@+id/textView"/>
+        android:text="@string/planet_name"
+        android:id="@+id/planetName"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white"
+        android:textSize="32sp"/>
 
-    <Button
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/likeLayout"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="5dp"
+        >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/likeValueLayout"
+            android:layout_weight="1"
+            android:gravity="right">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="123"
+                android:id="@+id/likeValue"
+                android:textColor="@android:color/white"
+                android:gravity="center_vertical"
+                android:phoneNumber="true"
+                style="@style/value"
+                android:layout_marginRight="15dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/likeImageLayout"
+            >
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/likeImage"
+                android:src="@drawable/like_flat"
+                android:layout_marginRight="15dp"/>
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+    <TextView
+        android:text="@string/population_label"
+        android:id="@+id/populationLabel"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/planetImage"
+        android:layout_marginTop="15dp"
+        style="@style/label"/>
+
+    <TextView
+        android:text="1230000321"
+        android:id="@+id/populationValue"
+        android:layout_below="@+id/populationLabel"
+        android:layout_centerHorizontal="true"
+        style="@style/value_big"/>
+
+    <TextView
+        android:text="@string/rotation_period_label"
+        android:id="@+id/rotationPeriodLabel"
+        android:layout_alignTop="@+id/planetImage"
+        android:layout_toRightOf="@+id/planetImage"
+        android:layout_toEndOf="@+id/planetImage"
+        android:layout_marginLeft="15dp"
+        style="@style/label"
+        android:gravity="start"/>
+
+    <TextView
+        android:text="@string/orbital_period_label"
+        android:id="@+id/orbitalPeriodLabel"
+        style="@style/label"
+        android:layout_alignTop="@+id/planetImage"
+        android:layout_toLeftOf="@+id/planetImage"
+        android:layout_toStartOf="@+id/planetImage"
+        android:layout_marginRight="15dp"
+        android:gravity="end"/>
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
-        android:layout_below="@+id/textView"
+        android:text="63"
+        android:id="@+id/rotationPeriodValue"
+        android:layout_below="@+id/rotationPeriodLabel"
+        android:layout_alignLeft="@+id/rotationPeriodLabel"
+        android:layout_alignStart="@+id/rotationPeriodLabel"
+        style="@style/value"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="722"
+        android:id="@+id/orbitalPeriodValue"
+        style="@style/value"
+        android:layout_below="@+id/orbitalPeriodLabel"
+        android:layout_alignRight="@+id/orbitalPeriodLabel"
+        android:layout_alignEnd="@+id/orbitalPeriodLabel"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/diameter_label"
+        android:id="@+id/diameterLabel"
+        style="@style/label"
+        android:layout_above="@+id/diameterValue"
+        android:layout_alignLeft="@+id/diameterValue"
+        android:layout_alignStart="@+id/diameterValue"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12345"
+        android:id="@+id/diameterValue"
+        android:layout_alignBottom="@+id/planetImage"
+        android:layout_toRightOf="@+id/planetImage"
+        android:layout_toEndOf="@+id/planetImage"
+        android:layout_marginLeft="15dp"
+        style="@style/value"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="450"
+        android:id="@+id/residentsValue"
+        style="@style/value"
+        android:layout_alignBottom="@+id/planetImage"
+        android:layout_toLeftOf="@+id/planetImage"
+        android:layout_toStartOf="@+id/planetImage"
+        android:layout_marginRight="15dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/residents_label"
+        android:id="@+id/residentsLabel"
+        style="@style/label"
+        android:layout_above="@+id/residentsValue"
+        android:layout_alignRight="@+id/residentsValue"
+        android:layout_alignEnd="@+id/residentsValue"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/populationValue"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp"/>
+        android:layout_marginTop="15dp"
+        android:id="@+id/geoLayout"
+        >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/climateLayout"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/climate_label"
+                android:id="@+id/climateLabel"
+                style="@style/label_small"
+                android:gravity="center_horizontal"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Super duper"
+                android:id="@+id/climateValue"
+                style="@style/value_small"
+                android:gravity="center_horizontal"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/terrainLayout"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/terrain_label"
+                android:id="@+id/terrainLabel"
+                style="@style/label_small"
+                android:gravity="center_horizontal"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Magma"
+                android:id="@+id/terrainValue"
+                style="@style/value_small"
+                android:gravity="center_horizontal"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/surfaceLayout"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/surface_label"
+                android:id="@+id/surfaceLabel"
+                style="@style/label_small"
+                android:gravity="center_horizontal"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="666"
+                android:id="@+id/surfaceValue"
+                style="@style/value_small"
+                android:gravity="center_horizontal"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/timeLayout"
+        android:layout_above="@+id/likeLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/createdLayout"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/created_label"
+                android:id="@+id/createdLabel"
+                android:gravity="center_horizontal"
+                style="@style/label_small"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="10:12:2095 at \n12:45:07"
+                android:id="@+id/createdValue"
+                android:gravity="center_horizontal"
+                style="@style/value_small"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/editedLayout"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/edited_label"
+                android:id="@+id/editedLabel"
+                android:gravity="center_horizontal"
+                style="@style/label_small"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="20:12:2095 at\n 20:58:18"
+                android:id="@+id/editedValue"
+                android:gravity="center_horizontal"
+                style="@style/value_small"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/gravityLayout"
+            android:layout_weight="1"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/gravity_label"
+                android:id="@+id/gravityLabel"
+                android:layout_below="@+id/geoLayout"
+                android:layout_centerHorizontal="true"
+                style="@style/label_small"
+                android:gravity="center_horizontal"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="W Heavy"
+                android:id="@+id/gravityValue"
+                android:layout_below="@+id/gravityLabel"
+                android:layout_centerHorizontal="true"
+                style="@style/value_small"
+                android:gravity="center_horizontal"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
 </RelativeLayout>
