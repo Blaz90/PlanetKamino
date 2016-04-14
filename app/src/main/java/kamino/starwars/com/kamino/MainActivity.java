@@ -1,65 +1,147 @@
 package kamino.starwars.com.kamino;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Config;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import kamino.starwars.com.kamino.model.ServerCommProtocol;
+import com.squareup.picasso.Picasso;
+
+import kamino.starwars.com.kamino.UI.BigImageActivity;
+import kamino.starwars.com.kamino.model.Networking;
+import kamino.starwars.com.kamino.model.PlanetKamino;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    ServerCommProtocol serverCommProtocol;
-    private static String mObject;
-    private static String mId;
-
-    private ImageView likeButton;
+    Networking mNetworking;
+    private String mObject;
+    private String mId;
+    private ImageView mLikeButton;
+    private ImageView mPlanetImage;
+    private String mImageUrl;
+    private boolean mClicked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mClicked = false;
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mObject = "planets";
-        mId = "10";
-
-        serverCommProtocol = new ServerCommProtocol();
         getData();
+        bigImageListener();
+        likePlanetListener();
 
-        likeButton = (ImageView)findViewById(R.id.likeImage);
-        likeButton.setOnClickListener(new View.OnClickListener() {
+    }
+
+    // This method listens for user click on planet image
+    private void bigImageListener() {
+        mPlanetImage = (ImageView)findViewById(R.id.planetImage);
+        mPlanetImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                serverCommProtocol.invokeSendData(mObject, mId, new ServerCommProtocol.DataListener() {
-                    @Override
-                    public void onResponseError(String errorMessage) {
-                        Log.e("response", errorMessage);
-                        Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_LONG).show();
-                    }
-
-                });
+                openImage();
             }
         });
     }
 
+    // This method opens BigImage activity on planet image click
+    private void openImage() {
+        Intent intent = new Intent(this, BigImageActivity.class);
+        intent.putExtra("image", mImageUrl);
+        startActivity(intent);
+    }
+
+    // This method listens for user click on like
+    private void likePlanetListener(){
+        mLikeButton = (ImageView)findViewById(R.id.likeImage);
+        mLikeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!mClicked) {
+                    mClicked = true;
+                    mNetworking.invokeSendData(mObject, mId, new Networking.DataListener() {
+                        @Override
+                        public void onResponseError(String errorMessage) {
+                            Log.e("response", errorMessage);
+                            Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void onResponseSuccess(PlanetKamino planetKamino) {
+                            updateDisplay(planetKamino);
+                        }
+
+                    });
+                }
+            }
+        });
+
+    }
+
+    // Get all data from API and save it in PlanetKamino or ResidentsKamino.
     private void getData() {
-        serverCommProtocol.invokeGetData(mObject, mId, new ServerCommProtocol.DataListener() {
+        Toast.makeText(MainActivity.this, "Loading data..", Toast.LENGTH_SHORT).show();
+        mObject = "planets";
+        mId = "10";
+        mNetworking = new Networking();
+        mNetworking.invokeGetData(mObject, mId, new Networking.DataListener() {
             @Override
             public void onResponseError(String errorMessage) {
                 Log.e("response", errorMessage);
                 Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_LONG).show();
             }
+
+            @Override
+            public void onResponseSuccess(PlanetKamino planetKamino) {
+                updateDisplay(planetKamino);
+                Toast.makeText(MainActivity.this, "Data received", Toast.LENGTH_LONG).show();
+            }
         });
+    }
+
+    // When data is succesfuly received, display it on screen
+    public void updateDisplay(PlanetKamino planetKamino) {
+        TextView planetName = (TextView)findViewById(R.id.planetName);
+        TextView rotationPeriod = (TextView)findViewById(R.id.rotationPeriodValue);
+        TextView orbitalPeriod = (TextView)findViewById(R.id.orbitalPeriodValue);
+        TextView diameter = (TextView)findViewById(R.id.diameterValue);
+        TextView climate = (TextView)findViewById(R.id.climateValue);
+        TextView gravity = (TextView)findViewById(R.id.gravityValue);
+        TextView terrain = (TextView)findViewById(R.id.terrainValue);
+        TextView surfaceWater = (TextView)findViewById(R.id.surfaceValue);
+        TextView population = (TextView)findViewById(R.id.populationValue);
+        TextView created = (TextView)findViewById(R.id.createdValue);
+        TextView edited = (TextView)findViewById(R.id.editedValue);
+        TextView like = (TextView)findViewById(R.id.likeValue);
+        ImageView image = (ImageView)findViewById(R.id.planetImage);
+
+        planetName.setText(planetKamino.getName());
+        rotationPeriod.setText(planetKamino.getRotationPeriod());
+        orbitalPeriod.setText(planetKamino.getOrbitalPeriod());
+        diameter.setText(planetKamino.getDiameter());
+        climate.setText(planetKamino.getClimate());
+        gravity.setText(planetKamino.getGravity());
+        terrain.setText(planetKamino.getTerrain());
+        surfaceWater.setText(planetKamino.getSurfaceWater());
+        population.setText(planetKamino.getPopulation());
+        created.setText(planetKamino.getCreated());
+        edited.setText(planetKamino.getEdited());
+        like.setText(planetKamino.getLikes());
+        mImageUrl = planetKamino.getImageUrl();
+
+        Picasso.with(getApplicationContext()).load(mImageUrl).into(image);
     }
 
     @Override

@@ -1,6 +1,9 @@
 package kamino.starwars.com.kamino.model;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created by blazzajec on 11/04/16.
@@ -98,6 +101,7 @@ public class PlanetKamino {
     public String getEdited() {
         return mEdited;
     }
+
 
     public void setEdited(String edited) {
         mEdited = edited;
