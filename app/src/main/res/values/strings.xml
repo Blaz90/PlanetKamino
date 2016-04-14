@@ -6,7 +6,6 @@
     <string name="rotation_period_label">Rotation period</string>
     <string name="orbital_period_label">Orbital period</string>
     <string name="diameter_label">Diameter</string>
-    <string name="residents_label">Residents</string>
     <string name="climate_label">Climate</string>
     <string name="terrain_label">Terrain</string>
     <string name="surface_label">Surface water</string>
