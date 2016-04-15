@@ -28,6 +28,8 @@ public class BigImageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.planet_image);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.menu_back);
+        setSupportActionBar(myToolbar);
 
         Intent intent = getIntent();
         String planetImage = intent.getStringExtra("image");
