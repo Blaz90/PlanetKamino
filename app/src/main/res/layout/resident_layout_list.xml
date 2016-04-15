@@ -16,7 +16,7 @@
         style="@style/resident_image_list"/>
 
     <TextView
-        android:text="Marcel Vojtkovszky"
+        android:text="@string/empty_value"
         android:id="@+id/residentName"
         style="@style/resident_name_list"/>
 </LinearLayout>
