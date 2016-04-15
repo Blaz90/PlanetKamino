@@ -5,6 +5,7 @@
     <string name="population_label">Population</string>
     <string name="rotation_period_label">Rotation period</string>
     <string name="orbital_period_label">Orbital period</string>
+    <string name="residents_label">Residents</string>
     <string name="diameter_label">Diameter</string>
     <string name="climate_label">Climate</string>
     <string name="terrain_label">Terrain</string>

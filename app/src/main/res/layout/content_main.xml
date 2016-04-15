@@ -61,7 +61,7 @@
                 android:gravity="center_vertical"
                 android:phoneNumber="true"
                 style="@style/value"
-                android:layout_marginRight="15dp"/>
+                android:layout_marginRight="@dimen/margin_big"/>
         </LinearLayout>
 
         <LinearLayout
@@ -76,7 +76,7 @@
                 android:layout_height="50dp"
                 android:id="@+id/likeImage"
                 android:src="@drawable/like_flat"
-                android:layout_marginRight="15dp"/>
+                android:layout_marginRight="@dimen/margin_big"/>
         </LinearLayout>
 
 
@@ -104,7 +104,7 @@
         android:layout_alignTop="@+id/planetImage"
         android:layout_toRightOf="@+id/planetImage"
         android:layout_toEndOf="@+id/planetImage"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="@dimen/margin_big"
         style="@style/label"
         android:gravity="start"/>
 
@@ -115,7 +115,7 @@
         android:layout_alignTop="@+id/planetImage"
         android:layout_toLeftOf="@+id/planetImage"
         android:layout_toStartOf="@+id/planetImage"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="@dimen/margin_big"
         android:gravity="end"/>
 
     <TextView
@@ -156,29 +156,29 @@
         android:layout_alignBottom="@+id/planetImage"
         android:layout_toRightOf="@+id/planetImage"
         android:layout_toEndOf="@+id/planetImage"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="@dimen/margin_big"
         style="@style/value"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/empty_value"
-        android:id="@+id/gravityValue"
+        android:id="@+id/residentsValue"
         style="@style/value"
         android:layout_alignBottom="@+id/planetImage"
         android:layout_toLeftOf="@+id/planetImage"
         android:layout_toStartOf="@+id/planetImage"
-        android:layout_marginRight="15dp"/>
+        android:layout_marginRight="@dimen/margin_big"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/gravity_label"
-        android:id="@+id/gravityLabel"
+        android:text="@string/residents_label"
+        android:id="@+id/residentsLabel"
         style="@style/label"
-        android:layout_above="@+id/gravityValue"
-        android:layout_alignRight="@+id/gravityValue"
-        android:layout_alignEnd="@+id/gravityValue"/>
+        android:layout_above="@+id/residentsValue"
+        android:layout_alignRight="@+id/residentsValue"
+        android:layout_alignEnd="@+id/residentsValue"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -322,5 +322,24 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gravity_label"
+        android:id="@+id/gravityLabel"
+        android:layout_below="@+id/geoLayout"
+        android:layout_centerHorizontal="true"
+        style="@style/label_small"
+        android:layout_marginTop="@dimen/margin_small"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/empty_value"
+        android:id="@+id/gravityValue"
+        android:layout_below="@+id/gravityLabel"
+        android:layout_centerHorizontal="true"
+        style="@style/value_small"/>
 
 </RelativeLayout>
