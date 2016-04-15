@@ -12,7 +12,6 @@
     <string name="gravity_label">Gravity</string>
     <string name="created_label">Created</string>
     <string name="edited_label">Edited</string>
-
     <string name="gender_label">Gender:</string>
     <string name="birth_year_label">Birth year:</string>
     <string name="homeworld_label">Homeworld:</string>
