@@ -20,7 +20,7 @@
         android:src="@drawable/no_image_available"
         android:layout_below="@+id/planetName"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/value_big"
+        android:layout_marginTop="@dimen/margin_big"
         />
 
     <TextView
@@ -88,7 +88,7 @@
         android:id="@+id/populationLabel"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/planetImage"
-        android:layout_marginTop="@dimen/value_big"
+        android:layout_marginTop="@dimen/margin_big"
         style="@style/label"/>
 
     <TextView
@@ -186,7 +186,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/populationValue"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/value_big"
+        android:layout_marginTop="@dimen/margin_big"
         android:id="@+id/geoLayout"
         >
 
@@ -271,7 +271,7 @@
         android:id="@+id/timeLayout"
         android:layout_above="@+id/likeLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/value_big">
+        android:layout_marginBottom="@dimen/margin_big">
 
         <LinearLayout
             android:orientation="vertical"
