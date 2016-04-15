@@ -2,7 +2,6 @@ package kamino.starwars.com.kamino.model;
 
 import android.app.Activity;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -10,10 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
@@ -30,16 +26,34 @@ public class Networking extends Activity {
 
     private PlanetKamino mPlanetKamino;
     private ResidentKamino mResidentKamino;
+    private ResidentList mResidentList;
     StringEntity entity;
-    ArrayList<String> arrayList;
+    ArrayList<String> mResidentIds;
 
-    public interface DataListener {
+    public interface LikeDataListener {
         void onResponseError(String errorMessage);
-        void onResponseSuccess(PlanetKamino planetKamino);
+        void onLikeResponseSuccess(PlanetKamino planetKamino);
+    }
+
+    public interface PlanetDataListener {
+        void onResponseError(String errorMessage);
+        void onPlanetResponseSuccess(PlanetKamino planetKamino);
+    }
+
+    public interface ResidentDataListener {
+        void onResponseError(String errorMessage);
+        void onResidentResponseSuccess(ResidentKamino residentKamino);
+    }
+
+    public interface ResidentListDataListener {
+        void onResponseError(String errorMessage);
+        void onResidentListResponseSuccess(ResidentList residentList);
     }
 
     // API request call - get data
-    public void invokeGetData(final String object, final String id, final DataListener dataListener) {
+    public void getPlanet(final PlanetDataListener dataListener) {
+        String object = "planets";
+        String id = "10";
         API_REQ_URL = API_BASE_URL + object + "/" + id;
         // Make RESTful webservice call using AsyncHttpClient object
         AsyncHttpClient client = new AsyncHttpClient();
@@ -52,12 +66,8 @@ public class Networking extends Activity {
                 String jsonData = "";
                 try {
                     jsonData = new String(responseBody, "UTF-8"); // for UTF-8 encoding
-                    if (object.equals("planets")) {
-                        mPlanetKamino = getPlanetDetails(jsonData);
-                    } else if (object.equals("residents")) {
-                        mResidentKamino = getResidentDetails(jsonData);
-                    }
-                    dataListener.onResponseSuccess(mPlanetKamino);
+
+                    dataListener.onPlanetResponseSuccess(savePlanetData(jsonData));
 
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
@@ -85,28 +95,29 @@ public class Networking extends Activity {
         });
     }
 
-    // API request call - send data (like)
-    public void invokeSendData(final String object, final String id, final DataListener dataListener) {
-        API_REQ_URL = API_BASE_URL + object + "/" + id  + "/like";
-        try {
-            entity = new StringEntity("{  'planet_id': 10}", "UTF-8");
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            return;
-        }
+    public void getResident(int residentId, final ResidentDataListener dataListener) {
+        String object = "residents";
+        API_REQ_URL = API_BASE_URL + object + "/" + residentId;
         // Make RESTful webservice call using AsyncHttpClient object
         AsyncHttpClient client = new AsyncHttpClient();
         hmacAuthentication(client);
-        client.post(this, API_REQ_URL, entity, "application/json", new AsyncHttpResponseHandler() {
+
+        client.get(API_REQ_URL, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
                 String jsonData = "";
                 try {
                     jsonData = new String(responseBody, "UTF-8"); // for UTF-8 encoding
+
+                    dataListener.onResidentResponseSuccess(saveResidentData(jsonData));
+
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+                //Log.e("server said", jsonData);
             }
 
             @Override
@@ -127,6 +138,54 @@ public class Networking extends Activity {
         });
     }
 
+    
+
+    // API request call - send data (like)
+    public void sendLike(final LikeDataListener dataListener) {
+        String object = "planets";
+        String id = "10";
+        String like = "like";
+        API_REQ_URL = API_BASE_URL + object + "/" + id  + "/" + like;
+        try {
+            entity = new StringEntity("{  'planet_id': "+ id +"}", "UTF-8");
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return;
+        }
+        // Make RESTful webservice call using AsyncHttpClient object
+        AsyncHttpClient client = new AsyncHttpClient();
+        hmacAuthentication(client);
+        client.post(this, API_REQ_URL, entity, "application/json", new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                String jsonData = "";
+                Log.d("","jsonData: " + jsonData);
+                try {
+                    jsonData = new String(responseBody, "UTF-8"); // for UTF-8 encoding
+                     //dataListener.onLikeResponseSuccess(mPlanetKamino);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                // When Http response code is '404'
+                if (statusCode == 404) {
+                    dataListener.onResponseError("Requested resource not found");
+                }
+                // When Http response code is '500'
+                else if (statusCode == 500) {
+                    dataListener.onResponseError("Something went wrong at server end");
+                }
+                // When Http response code other than 404, 500
+                else {
+                    dataListener.onResponseError("No Internet connection");
+                }            }
+        });
+    }
+
     // HMAC (Hash-based message authentication code)
     protected void hmacAuthentication(AsyncHttpClient client){
         // keyString of value is "abcd"
@@ -137,7 +196,7 @@ public class Networking extends Activity {
     }
 
     // fill ResidentKamino object with data from API
-    private ResidentKamino getResidentDetails(String jsonData) throws JSONException {
+    private ResidentKamino saveResidentData(String jsonData) throws JSONException {
         JSONObject resident = new JSONObject(jsonData);
 
         ResidentKamino residentKamino = new ResidentKamino();
@@ -159,7 +218,7 @@ public class Networking extends Activity {
     }
 
     // fill PlanetKamino object with data from API
-    private PlanetKamino getPlanetDetails(String jsonData) throws JSONException {
+    private PlanetKamino savePlanetData(String jsonData) throws JSONException {
         JSONObject planet = new JSONObject(jsonData);
 
         PlanetKamino planetKamino = new PlanetKamino();
@@ -178,14 +237,41 @@ public class Networking extends Activity {
         planetKamino.setImageUrl(planet.getString("image_url"));
         planetKamino.setLikes(planet.getString("likes"));
 
-        getJsonArray(planet);
-        planetKamino.setArrayIds(arrayList);
+        getResidentIds(planet);
+        planetKamino.setResidentIds(mResidentIds);
+        planetKamino.setResidents(String.valueOf(mResidentIds.size())); // number of residents
 
         return planetKamino;
     }
 
+    // fill PlanetKamino object with data from API
+    /*
+    private PlanetKamino getArrayIds(String jsonData) throws JSONException {
+        JSONObject residents = new JSONObject(jsonData);
+
+        PlanetKamino planetKamino = new PlanetKamino();
+
+        getResidentIds(residents);
+        planetKamino.setResidentIds(mResidentIds);
+        Log.d("planet kamino","array: " + mResidentIds);
+
+        return planetKamino;
+    }
+    */
+
+    private ResidentList getNamesAndPictures(String jsonData) throws JSONException{
+        JSONObject residents = new JSONObject(jsonData);
+        ResidentList residentKamino = new ResidentList();
+
+        ArrayList residentNames = new ArrayList();
+        residentNames.add(0, residents.getString("name"));
+        residentKamino.setResidentNames(residentNames);
+
+        return residentKamino;
+    }
+
     // get IDs from residents of planet, if ID is repeated do not write it in array
-    private void getJsonArray(JSONObject jsonObject){
+    private void getResidentIds(JSONObject jsonObject){
         JSONArray jsonArray;
         try {
             jsonArray = jsonObject.getJSONArray("residents");
@@ -193,7 +279,7 @@ public class Networking extends Activity {
             e.printStackTrace();
             return;
         }
-        arrayList = new ArrayList<String>();
+        mResidentIds = new ArrayList<String>();
 
         for (int i = 0; i < jsonArray.length(); i++) {
             String str = null;
@@ -203,9 +289,9 @@ public class Networking extends Activity {
                 e.printStackTrace();
             }
             String id = str.substring(str.lastIndexOf("/") + 1);
-            boolean contains = arrayList.contains(id);
+            boolean contains = mResidentIds.contains(id);
             if (!contains) {
-                arrayList.add(i, id);
+                mResidentIds.add(i, id);
             }
         }
     }
