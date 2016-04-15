@@ -27,6 +27,11 @@
             android:label="@string/title_activity_kamino_picture"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".UI.AllResidentsActivity"
+            android:label="@string/title_activity_all_residents"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

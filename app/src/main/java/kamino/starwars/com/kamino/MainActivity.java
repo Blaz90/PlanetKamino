@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import kamino.starwars.com.kamino.UI.AllResidentsActivity;
 import kamino.starwars.com.kamino.UI.BigImageActivity;
 import kamino.starwars.com.kamino.model.Networking;
 import kamino.starwars.com.kamino.model.PlanetKamino;
@@ -61,10 +62,12 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, BigImageActivity.class);
         intent.putExtra("image", mImageUrl);
         startActivity(intent);
+
     }
 
     // This method listens for user click on like
     private void likePlanetListener(){
+        final Intent intent = new Intent(this, AllResidentsActivity.class);
         mLikeButton = (ImageView)findViewById(R.id.likeImage);
         mLikeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
                     });
                 }
+                startActivity(intent);
             }
         });
 

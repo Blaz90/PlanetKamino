@@ -26,7 +26,7 @@ public class Networking extends Activity {
     private final static String LOG_TAG = ".Networking";
 
     private final static String API_BASE_URL = "http://private-anon-ffc6f083f-starwars2.apiary-mock.com/";
-    String API_REQ_URL;
+    private String API_REQ_URL;
 
     private PlanetKamino mPlanetKamino;
     private ResidentKamino mResidentKamino;
@@ -57,16 +57,8 @@ public class Networking extends Activity {
                     } else if (object.equals("residents")) {
                         mResidentKamino = getResidentDetails(jsonData);
                     }
+                    dataListener.onResponseSuccess(mPlanetKamino);
 
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            //mMainActivity.updateDisplay(mPlanetKamino);
-                            //mUpdateData.updateDisplay(mPlanetKamino);
-                            //getData();
-                            dataListener.onResponseSuccess(mPlanetKamino);
-                        }
-                    });
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -93,6 +85,7 @@ public class Networking extends Activity {
         });
     }
 
+    // API request call - send data (like)
     public void invokeSendData(final String object, final String id, final DataListener dataListener) {
         API_REQ_URL = API_BASE_URL + object + "/" + id  + "/like";
         try {
@@ -134,6 +127,7 @@ public class Networking extends Activity {
         });
     }
 
+    // HMAC (Hash-based message authentication code)
     protected void hmacAuthentication(AsyncHttpClient client){
         // keyString of value is "abcd"
         // and string header is HMAC for now
@@ -142,6 +136,7 @@ public class Networking extends Activity {
         //Log.d("hmac",value);
     }
 
+    // fill ResidentKamino object with data from API
     private ResidentKamino getResidentDetails(String jsonData) throws JSONException {
         JSONObject resident = new JSONObject(jsonData);
 
@@ -163,6 +158,7 @@ public class Networking extends Activity {
         return residentKamino;
     }
 
+    // fill PlanetKamino object with data from API
     private PlanetKamino getPlanetDetails(String jsonData) throws JSONException {
         JSONObject planet = new JSONObject(jsonData);
 
@@ -188,6 +184,7 @@ public class Networking extends Activity {
         return planetKamino;
     }
 
+    // get IDs from residents of planet, if ID is repeated do not write it in array
     private void getJsonArray(JSONObject jsonObject){
         JSONArray jsonArray;
         try {
