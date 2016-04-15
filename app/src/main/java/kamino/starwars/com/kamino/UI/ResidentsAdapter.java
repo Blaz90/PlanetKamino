@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.List;
 import kamino.starwars.com.kamino.R;
 
@@ -16,7 +14,7 @@ import kamino.starwars.com.kamino.R;
 /**
  * Created by blazzajec on 15/04/16.
  */
-public class ResidentsAdapter extends RecyclerView.Adapter<ResidentsAdapter.ChatViewHolder> {
+public class ResidentsAdapter extends RecyclerView.Adapter<ResidentsAdapter.ViewHolder> {
 
     private List<ResidentListActivity.ContactInfo> contactList;
 
@@ -30,27 +28,28 @@ public class ResidentsAdapter extends RecyclerView.Adapter<ResidentsAdapter.Chat
     }
 
     @Override
-    public void onBindViewHolder(ChatViewHolder contactViewHolder, int i) {
+    public void onBindViewHolder(ViewHolder contactViewHolder, int i) {
 
         ResidentListActivity.ContactInfo ci = contactList.get(i);
         contactViewHolder.vFullName.setText(ci.ciResidentName);
+
     }
 
     @Override
-    public ChatViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.
                 from(viewGroup.getContext()).
                 inflate(R.layout.resident_layout_list, viewGroup, false);
 
-        return new ChatViewHolder(itemView);
+        return new ViewHolder(itemView);
     }
 
-    public static class ChatViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         protected TextView vFullName;
         protected ImageView vImageView;
 
-        public ChatViewHolder(View v) {
+        public ViewHolder(View v) {
             super(v);
             vFullName =  (TextView) v.findViewById(R.id.residentName);
 
