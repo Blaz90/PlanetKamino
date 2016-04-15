@@ -26,7 +26,7 @@
     <string name="title_activity_activity_image">/</string>
     <string name="title_activity_kamino_picture">/</string>
     <string name="title_activity_main2">/</string>
-
+    <string name="title_activity_all_residents">AllResidentsActivity</string>
 
 
 </resources>

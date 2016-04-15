@@ -1,9 +1,10 @@
 package kamino.starwars.com.kamino.model;
 
-import java.text.SimpleDateFormat;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.TimeZone;
 
 /**
  * Created by blazzajec on 11/04/16.
@@ -23,7 +24,8 @@ public class PlanetKamino {
     private String mEdited;
     private String mImageUrl;
     private String mLikes;
-    private ArrayList mArrayIds;
+    private String mResidents;
+    private ArrayList mResidentIds;
 
 
     public String getName() {
@@ -131,11 +133,20 @@ public class PlanetKamino {
         mImageUrl = imageUrl;
     }
 
-    public ArrayList getArrayIds() {
-        return mArrayIds;
+    public String getResidents() {
+        return mResidents;
     }
 
-    public void setArrayIds(ArrayList arrayIds) {
-        this.mArrayIds = arrayIds;
+    public void setResidents(String residents) {
+        this.mResidents = residents;
     }
+
+    public ArrayList getResidentIds() {
+        return mResidentIds;
+    }
+
+    public void setResidentIds(ArrayList residentIds) {
+        mResidentIds = residentIds;
+    }
+
 }

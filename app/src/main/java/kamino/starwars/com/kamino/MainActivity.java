@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import kamino.starwars.com.kamino.UI.ResidentListActivity;
 import kamino.starwars.com.kamino.UI.BigImageActivity;
 import kamino.starwars.com.kamino.model.Networking;
 import kamino.starwars.com.kamino.model.PlanetKamino;
@@ -22,11 +23,11 @@ import kamino.starwars.com.kamino.model.PlanetKamino;
 public class MainActivity extends AppCompatActivity {
 
     Networking mNetworking;
+    PlanetKamino mPlanetKamino;
     private String mObject;
     private String mId;
     private ImageView mLikeButton;
     private ImageView mPlanetImage;
-    private String mImageUrl;
     private boolean mClicked;
 
     @Override
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getData();
+        getPlanetData();
         bigImageListener();
         likePlanetListener();
 
@@ -59,7 +60,14 @@ public class MainActivity extends AppCompatActivity {
     // This method opens BigImage activity on planet image click
     private void openImage() {
         Intent intent = new Intent(this, BigImageActivity.class);
-        intent.putExtra("image", mImageUrl);
+        intent.putExtra("image", mPlanetKamino.getImageUrl());
+        startActivity(intent);
+
+    }
+
+    private void openResidentList(){
+        Intent intent = new Intent(this, ResidentListActivity.class);
+        intent.putExtra("residentIds", mPlanetKamino.getResidentIds());
         startActivity(intent);
     }
 
@@ -71,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!mClicked) {
                     mClicked = true;
-                    mNetworking.invokeSendData(mObject, mId, new Networking.DataListener() {
+                    mNetworking.sendLike(new Networking.LikeDataListener() {
                         @Override
                         public void onResponseError(String errorMessage) {
                             Log.e("response", errorMessage);
@@ -79,24 +87,25 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onResponseSuccess(PlanetKamino planetKamino) {
-                            updateDisplay(planetKamino);
+                        public void onLikeResponseSuccess(PlanetKamino planetKamino) {
+                            getPlanetData();
                         }
-
                     });
                 }
+
+                openResidentList();
+
             }
         });
 
     }
 
-    // Get all data from API and save it in PlanetKamino or ResidentsKamino.
-    private void getData() {
+    // Get all data from API and save it in PlanetKamino.
+    private void getPlanetData() {
         Toast.makeText(MainActivity.this, "Loading data..", Toast.LENGTH_SHORT).show();
-        mObject = "planets";
-        mId = "10";
         mNetworking = new Networking();
-        mNetworking.invokeGetData(mObject, mId, new Networking.DataListener() {
+        mNetworking.getPlanet(new Networking.PlanetDataListener() {
+
             @Override
             public void onResponseError(String errorMessage) {
                 Log.e("response", errorMessage);
@@ -104,12 +113,14 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onResponseSuccess(PlanetKamino planetKamino) {
-                updateDisplay(planetKamino);
+            public void onPlanetResponseSuccess(PlanetKamino planetKamino) {
+                mPlanetKamino = planetKamino;
+                updateDisplay(mPlanetKamino);
                 Toast.makeText(MainActivity.this, "Data received", Toast.LENGTH_LONG).show();
             }
         });
     }
+
 
     // When data is succesfuly received, display it on screen
     public void updateDisplay(PlanetKamino planetKamino) {
@@ -119,13 +130,16 @@ public class MainActivity extends AppCompatActivity {
         TextView diameter = (TextView)findViewById(R.id.diameterValue);
         TextView climate = (TextView)findViewById(R.id.climateValue);
         TextView gravity = (TextView)findViewById(R.id.gravityValue);
+        // residents
         TextView terrain = (TextView)findViewById(R.id.terrainValue);
         TextView surfaceWater = (TextView)findViewById(R.id.surfaceValue);
         TextView population = (TextView)findViewById(R.id.populationValue);
         TextView created = (TextView)findViewById(R.id.createdValue);
         TextView edited = (TextView)findViewById(R.id.editedValue);
-        TextView like = (TextView)findViewById(R.id.likeValue);
         ImageView image = (ImageView)findViewById(R.id.planetImage);
+
+        TextView like = (TextView)findViewById(R.id.likeValue);
+
 
         planetName.setText(planetKamino.getName());
         rotationPeriod.setText(planetKamino.getRotationPeriod());
@@ -133,15 +147,16 @@ public class MainActivity extends AppCompatActivity {
         diameter.setText(planetKamino.getDiameter());
         climate.setText(planetKamino.getClimate());
         gravity.setText(planetKamino.getGravity());
+        // residents
         terrain.setText(planetKamino.getTerrain());
         surfaceWater.setText(planetKamino.getSurfaceWater());
         population.setText(planetKamino.getPopulation());
         created.setText(planetKamino.getCreated());
         edited.setText(planetKamino.getEdited());
-        like.setText(planetKamino.getLikes());
-        mImageUrl = planetKamino.getImageUrl();
+        Picasso.with(getApplicationContext()).load(mPlanetKamino.getImageUrl()).into(image);
 
-        Picasso.with(getApplicationContext()).load(mImageUrl).into(image);
+        like.setText(mPlanetKamino.getLikes());
+
     }
 
     @Override
