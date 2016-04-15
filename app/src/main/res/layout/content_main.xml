@@ -14,13 +14,13 @@
     >
 
     <ImageView
-        android:layout_width="130dp"
-        android:layout_height="130dp"
+        android:layout_width="@dimen/planet_image_small"
+        android:layout_height="@dimen/planet_image_small"
         android:id="@+id/planetImage"
         android:src="@drawable/no_image_available"
         android:layout_below="@+id/planetName"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/value_big"
         />
 
     <TextView
@@ -31,7 +31,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:textColor="@android:color/white"
-        android:textSize="32sp"/>
+        android:textSize="@dimen/title"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -41,7 +41,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="@dimen/margin_small"
         >
 
         <LinearLayout
@@ -72,8 +72,8 @@
             >
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/like_button"
+                android:layout_height="@dimen/like_button"
                 android:id="@+id/likeImage"
                 android:src="@drawable/like_flat"
                 android:layout_marginRight="@dimen/margin_big"/>
@@ -88,7 +88,7 @@
         android:id="@+id/populationLabel"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/planetImage"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/value_big"
         style="@style/label"/>
 
     <TextView
@@ -186,7 +186,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/populationValue"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/value_big"
         android:id="@+id/geoLayout"
         >
 
@@ -271,7 +271,7 @@
         android:id="@+id/timeLayout"
         android:layout_above="@+id/likeLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15dp">
+        android:layout_marginBottom="@dimen/value_big">
 
         <LinearLayout
             android:orientation="vertical"

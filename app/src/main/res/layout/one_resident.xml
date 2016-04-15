@@ -11,12 +11,12 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/basicInfoLayout"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginTop="@dimen/margin_big"
+        android:layout_marginLeft="@dimen/margin_big"
+        android:layout_marginRight="@dimen/margin_big">
 
         <ImageView
-            android:layout_width="150dp"
+            android:layout_width="@dimen/resident_image"
             android:layout_height="match_parent"
             android:id="@+id/residentImage"
             android:clickable="false"
@@ -42,7 +42,7 @@
                     style="@style/resident_name_list"/>
 
                 <LinearLayout
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/margin_small"
                     style="@style/basic_info"
                     android:id="@+id/genderLayout">
 
@@ -59,14 +59,14 @@
                         android:layout_height="match_parent"
                         android:text="@string/empty_value"
                         android:id="@+id/genderValue"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="@dimen/margin_small"
                         style="@style/value_small"
                         android:gravity="center_vertical"/>
                 </LinearLayout>
 
                 <LinearLayout
                     style="@style/basic_info"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/birthYearLayout">
@@ -85,13 +85,13 @@
                         android:layout_height="match_parent"
                         android:text="@string/empty_value"
                         android:id="@+id/birthYearValue"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="@dimen/margin_small"
                         android:gravity="center_vertical"/>
                 </LinearLayout>
 
                 <LinearLayout
                     style="@style/basic_info"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/homeworldLayout">
@@ -110,7 +110,7 @@
                         android:layout_height="match_parent"
                         android:text="@string/empty_value"
                         android:id="@+id/homeworldValue"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="@dimen/margin_small"
                         android:gravity="center_vertical"/>
                 </LinearLayout>
 
@@ -122,7 +122,7 @@
         style="@style/value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="@dimen/margin_big"
         android:layout_centerHorizontal="true"
         android:text="@string/other_data_label"
         android:layout_below="@+id/basicInfoLayout"
@@ -132,16 +132,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginRight="@dimen/margin_big"
+        android:layout_marginLeft="@dimen/margin_big"
         android:layout_below="@+id/otherDataLabel">
 
         <TableRow style="@style/basic_info"
                   android:layout_width="match_parent">
             <TextView
                 android:text="@string/height_label"
-                android:padding="3dip"
+                android:padding="@dimen/padding"
                 style="@style/label"
                 android:id="@+id/heightLabel"
                 android:layout_height="wrap_content"
@@ -149,7 +149,7 @@
                 android:layout_column="1"
                 />
             <TextView
-                android:padding="3dip"
+                android:padding="@dimen/padding"
                 style="@style/value_small"
                 android:id="@+id/heightValue"
                 android:layout_width="wrap_content"
@@ -167,7 +167,7 @@
                 style="@style/label"
                 android:layout_column="1"
                 android:text="@string/mass_label"
-                android:padding="3dip"
+                android:padding="@dimen/padding"
                 android:id="@+id/massLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
             <TextView
                 style="@style/value_small"
                 android:text="@string/empty_value"
-                android:padding="3dip"
+                android:padding="@dimen/padding"
                 android:id="@+id/massValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -193,7 +193,7 @@
                 style="@style/label"
                 android:layout_column="1"
                 android:text="@string/hair_color_label"
-                android:padding="3dip"
+                android:padding="@dimen/padding"
                 android:id="@+id/hairColorLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -202,7 +202,7 @@
             <TextView
                 style="@style/value_small"
                 android:text="@string/empty_value"
-                android:padding="3dip"
+                android:padding="@dimen/padding"
                 android:id="@+id/hairColorValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -218,7 +218,7 @@
                 style="@style/label"
                 android:layout_column="1"
                 android:text="@string/skin_color_label"
-                android:padding="3dip"
+                android:padding="@dimen/padding"
                 android:id="@+id/skinColorLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -227,7 +227,7 @@
             <TextView
                 style="@style/value_small"
                 android:text="@string/empty_value"
-                android:padding="3dip"
+                android:padding="@dimen/padding"
                 android:id="@+id/skinColorValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -243,7 +243,7 @@
                 style="@style/label"
                 android:layout_column="1"
                 android:text="@string/eye_color_label"
-                android:padding="3dip"
+                android:padding="@dimen/padding"
                 android:id="@+id/eyeColorLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -252,7 +252,7 @@
             <TextView
                 style="@style/value_small"
                 android:text="@string/empty_value"
-                android:padding="3dip"
+                android:padding="@dimen/padding"
                 android:id="@+id/eyeColorValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -268,7 +268,7 @@
                 style="@style/label"
                 android:layout_column="1"
                 android:text="@string/created_label"
-                android:padding="3dip"
+                android:padding="@dimen/padding"
                 android:id="@+id/createdLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -277,7 +277,7 @@
             <TextView
                 style="@style/value_small"
                 android:text="@string/empty_value"
-                android:padding="3dip"
+                android:padding="@dimen/padding"
                 android:id="@+id/createdValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -293,7 +293,7 @@
                 style="@style/label"
                 android:layout_column="1"
                 android:text="@string/edited_label"
-                android:padding="3dip"
+                android:padding="@dimen/padding"
                 android:id="@+id/editedLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -302,7 +302,7 @@
             <TextView
                 style="@style/value_small"
                 android:text="@string/empty_value"
-                android:padding="3dip"
+                android:padding="@dimen/padding"
                 android:id="@+id/editedValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

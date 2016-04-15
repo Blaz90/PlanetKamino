@@ -9,8 +9,12 @@
     <dimen name="value_small">16sp</dimen>
     <dimen name="value_big">26sp</dimen>
     <dimen name="resident_image_list">100dp</dimen>
+    <dimen name="resident_image">150dp</dimen>
+    <dimen name="planet_image_small">130dp</dimen>
+    <dimen name="planet_image_big">300dp</dimen>
+    <dimen name="like_button">50dp</dimen>
     <dimen name="margin_small">5dp</dimen>
     <dimen name="margin_big">15dp</dimen>
-    <dimen name="resident_name">32dp</dimen>
-
+    <dimen name="title">32dp</dimen>
+    <dimen name="padding">3dp</dimen>
 </resources>
