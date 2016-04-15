@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         TextView orbitalPeriod = (TextView)findViewById(R.id.orbitalPeriodValue);
         TextView diameter = (TextView)findViewById(R.id.diameterValue);
         TextView climate = (TextView)findViewById(R.id.climateValue);
-        TextView gravity = (TextView)findViewById(R.id.residentsValue);
+        TextView gravity = (TextView)findViewById(R.id.gravityValue);
         TextView terrain = (TextView)findViewById(R.id.terrainValue);
         TextView surfaceWater = (TextView)findViewById(R.id.surfaceValue);
         TextView population = (TextView)findViewById(R.id.populationValue);
