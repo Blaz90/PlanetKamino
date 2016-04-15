@@ -26,7 +26,6 @@ public class Networking extends Activity {
 
     private PlanetKamino mPlanetKamino;
     private ResidentKamino mResidentKamino;
-    private ResidentList mResidentList;
     StringEntity entity;
     ArrayList<String> mResidentIds;
 
@@ -45,10 +44,6 @@ public class Networking extends Activity {
         void onResidentResponseSuccess(ResidentKamino residentKamino);
     }
 
-    public interface ResidentListDataListener {
-        void onResponseError(String errorMessage);
-        void onResidentListResponseSuccess(ResidentList residentList);
-    }
 
     // API request call - get data
     public void getPlanet(final PlanetDataListener dataListener) {
@@ -95,7 +90,7 @@ public class Networking extends Activity {
         });
     }
 
-    public void getResident(int residentId, final ResidentDataListener dataListener) {
+    public void getResident(String residentId, final ResidentDataListener dataListener) {
         String object = "residents";
         API_REQ_URL = API_BASE_URL + object + "/" + residentId;
         // Make RESTful webservice call using AsyncHttpClient object
@@ -138,7 +133,7 @@ public class Networking extends Activity {
         });
     }
 
-    
+
 
     // API request call - send data (like)
     public void sendLike(final LikeDataListener dataListener) {
@@ -259,7 +254,7 @@ public class Networking extends Activity {
     }
     */
 
-    private ResidentList getNamesAndPictures(String jsonData) throws JSONException{
+    /*private ResidentList getNamesAndPictures(String jsonData) throws JSONException{
         JSONObject residents = new JSONObject(jsonData);
         ResidentList residentKamino = new ResidentList();
 
@@ -268,7 +263,7 @@ public class Networking extends Activity {
         residentKamino.setResidentNames(residentNames);
 
         return residentKamino;
-    }
+    }*/
 
     // get IDs from residents of planet, if ID is repeated do not write it in array
     private void getResidentIds(JSONObject jsonObject){

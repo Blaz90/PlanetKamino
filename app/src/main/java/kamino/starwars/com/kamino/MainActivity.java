@@ -14,12 +14,10 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import kamino.starwars.com.kamino.UI.AllResidentsActivity;
+import kamino.starwars.com.kamino.UI.ResidentListActivity;
 import kamino.starwars.com.kamino.UI.BigImageActivity;
 import kamino.starwars.com.kamino.model.Networking;
 import kamino.starwars.com.kamino.model.PlanetKamino;
-import kamino.starwars.com.kamino.model.ResidentKamino;
-import kamino.starwars.com.kamino.model.ResidentList;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -68,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openResidentList(){
-        Intent intent = new Intent(this, AllResidentsActivity.class);
+        Intent intent = new Intent(this, ResidentListActivity.class);
         intent.putExtra("residentIds", mPlanetKamino.getResidentIds());
         startActivity(intent);
     }

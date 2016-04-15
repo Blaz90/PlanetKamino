@@ -4,7 +4,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 import kamino.starwars.com.kamino.R;
 
@@ -14,9 +18,9 @@ import kamino.starwars.com.kamino.R;
  */
 public class ResidentsAdapter extends RecyclerView.Adapter<ResidentsAdapter.ChatViewHolder> {
 
-    private List<AllResidentsActivity.ContactInfo> contactList;
+    private List<ResidentListActivity.ContactInfo> contactList;
 
-    public ResidentsAdapter(List<AllResidentsActivity.ContactInfo> contactList) {
+    public ResidentsAdapter(List<ResidentListActivity.ContactInfo> contactList) {
         this.contactList = contactList;
     }
 
@@ -27,7 +31,8 @@ public class ResidentsAdapter extends RecyclerView.Adapter<ResidentsAdapter.Chat
 
     @Override
     public void onBindViewHolder(ChatViewHolder contactViewHolder, int i) {
-        AllResidentsActivity.ContactInfo ci = contactList.get(i);
+
+        ResidentListActivity.ContactInfo ci = contactList.get(i);
         contactViewHolder.vFullName.setText(ci.ciResidentName);
     }
 
@@ -43,6 +48,7 @@ public class ResidentsAdapter extends RecyclerView.Adapter<ResidentsAdapter.Chat
     public static class ChatViewHolder extends RecyclerView.ViewHolder {
 
         protected TextView vFullName;
+        protected ImageView vImageView;
 
         public ChatViewHolder(View v) {
             super(v);
