@@ -1,12 +1,12 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:colorBackground">#000405</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
 
     </style>
 
@@ -16,71 +16,70 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
-
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
     <style name="label">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">#80ffffff</item>
+        <item name="android:textSize">@dimen/label</item>
+        <item name="android:textColor">@color/colorLabel</item>
     </style>
 
     <style name="label_small">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">#80ffffff</item>
+        <item name="android:textSize">@dimen/label_small</item>
+        <item name="android:textColor">@color/colorLabel</item>
     </style>
 
     <style name="value">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">22sp</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/value</item>
+        <item name="android:textColor">@color/colorText</item>
     </style>
 
     <style name="value_small">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/value_small</item>
+        <item name="android:textColor">@color/colorText</item>
     </style>
 
     <style name="value_big">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">26sp</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/value_big</item>
+        <item name="android:textColor">@color/colorText</item>
     </style>
 
     <style name="resident_layout">
         <item name="android:orientation">horizontal</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">5dp</item>
-        <item name="android:background">#1fffffff</item>
+        <item name="android:layout_margin">@dimen/margin_small</item>
+        <item name="android:background">@color/colorResidentCard</item>
     </style>
 
     <style name="resident_name_list">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:textSize">32sp</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:textSize">@dimen/title</item>
+        <item name="android:layout_marginLeft">@dimen/margin_small</item>
+        <item name="android:textColor">@color/colorText</item>
     </style>
 
     <style name="resident_image_list">
-        <item name="android:layout_width">100dp</item>
-        <item name="android:layout_height">100dp</item>
+        <item name="android:layout_width">@dimen/resident_image_list</item>
+        <item name="android:layout_height">@dimen/resident_image_list</item>
     </style>
 
     <style name="basic_info">
         <item name="android:orientation">horizontal</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginLeft">@dimen/margin_small</item>
     </style>
 
 </resources>
