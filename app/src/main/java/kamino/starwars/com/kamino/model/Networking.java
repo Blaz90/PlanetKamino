@@ -38,6 +38,7 @@ public class Networking extends Activity {
         void onResponseSuccess(PlanetKamino planetKamino);
     }
 
+    // API request call - get data
     public void invokeGetData(final String object, final String id, final DataListener dataListener) {
         API_REQ_URL = API_BASE_URL + object + "/" + id;
         // Make RESTful webservice call using AsyncHttpClient object
