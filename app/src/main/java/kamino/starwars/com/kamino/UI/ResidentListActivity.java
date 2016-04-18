@@ -97,6 +97,7 @@ public class ResidentListActivity extends AppCompatActivity {
 
             ContactInfo ci = new ContactInfo();
             ci.ciResidentName = mNames.get(i);
+            ci.ciResidentUrl = mUrls.get(i);
 
             result.add(ci);
         }
@@ -105,6 +106,6 @@ public class ResidentListActivity extends AppCompatActivity {
 
     public class ContactInfo {
         public String ciResidentName;
-
+        public String ciResidentUrl;
     }
 }
