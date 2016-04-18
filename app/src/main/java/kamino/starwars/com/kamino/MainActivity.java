@@ -51,7 +51,9 @@ public class MainActivity extends AppCompatActivity {
         mPlanetImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openImage();
+                if (mPlanetKamino != null) {
+                    openImage();
+                }
             }
         });
     }
@@ -60,12 +62,6 @@ public class MainActivity extends AppCompatActivity {
     private void openImage() {
         Intent intent = new Intent(this, BigImageActivity.class);
         intent.putExtra("image", mPlanetKamino.getImageUrl());
-        startActivity(intent);
-    }
-
-    private void openResidentList(){
-        Intent intent = new Intent(this, ResidentListActivity.class);
-        intent.putExtra("residentIds", mPlanetKamino.getResidentIds());
         startActivity(intent);
     }
 
@@ -90,9 +86,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                 }
-
-                openResidentList();
-
             }
         });
 
@@ -172,10 +165,26 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_home) {
+            openPlanetKamino();
+            return true;
+        } else if (id == R.id.action_residents){
+            openResidentList();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private void openResidentList(){
+        Intent intent = new Intent(this, ResidentListActivity.class);
+        intent.putExtra("residentIds", mPlanetKamino.getResidentIds());
+        startActivity(intent);
+    }
+
+    private void openPlanetKamino(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
 }
