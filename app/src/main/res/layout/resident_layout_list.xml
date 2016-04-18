@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/residentLayout"
     android:layout_margin="@dimen/margin_small"
-    style="@style/resident_layout"
-    tools:showIn="@layout/residents_all">
+    style="@style/resident_layout">
 
     <ImageView
         android:id="@+id/residentImage"

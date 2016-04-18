@@ -1,5 +1,7 @@
 package kamino.starwars.com.kamino.UI;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import kamino.starwars.com.kamino.R;
 
 
@@ -37,7 +40,6 @@ public class ResidentsAdapter extends RecyclerView.Adapter<ResidentsAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder contactViewHolder, int i) {
         contactViewHolder.bind(contactList.get(i));
-
 
     }
 
@@ -65,8 +67,11 @@ public class ResidentsAdapter extends RecyclerView.Adapter<ResidentsAdapter.View
 
         @Override
         public void onClick(View v) {
-            Log.d("OnClick", "blabla" + mArrayList.get(getAdapterPosition()));
-            mArrayList.get(getAdapterPosition());
+            Context context = itemView.getContext();
+            Intent intent = new Intent(context, ResidentDetailsActivity.class);
+            intent.putExtra("residentIds", mArrayList);
+            intent.putExtra("position", getAdapterPosition());
+            context.startActivity(intent);
         }
 
         public void bind(final ResidentListActivity.ContactInfo item) {

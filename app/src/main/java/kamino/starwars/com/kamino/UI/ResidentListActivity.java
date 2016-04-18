@@ -8,7 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +20,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import kamino.starwars.com.kamino.MainActivity;
 import kamino.starwars.com.kamino.R;
 import kamino.starwars.com.kamino.model.Networking;
 import kamino.starwars.com.kamino.model.PlanetKamino;
@@ -36,6 +40,7 @@ public class ResidentListActivity extends AppCompatActivity {
     private ArrayList<String> mNames;
     private ArrayList<String> mUrls;
     private int counter;
+    int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,16 +54,47 @@ public class ResidentListActivity extends AppCompatActivity {
         mObject = "residents";
         mNetworking = new Networking();
 
-        getResidentNameAndUrl();
+        mNames = new ArrayList<String>();
+        mUrls = new ArrayList<String>();
+        i = 0;
+        getResidentNameAndUrl(i);
 
     }
 
     // Get all data from API and save it in ResidentKamino
+    private void getResidentNameAndUrl(final int i) {
+
+        String id = mResidentIds.get(i).toString();
+        Log.d("id","string: " + mResidentIds.get(i));
+        mNetworking.getResident(id, new Networking.ResidentDataListener() {
+            @Override
+            public void onResponseError(String errorMessage) {
+                Log.e("response", errorMessage);
+            }
+
+            @Override
+            public void onResidentResponseSuccess(ResidentKamino residentKamino) {
+                mNames.add(residentKamino.getName());
+                mUrls.add(residentKamino.getImageUrl());
+                Log.d("id", "name: " + residentKamino.getName());
+                if (counter >= mResidentIds.size() - 1) {
+                    generateList();
+                    Toast.makeText(ResidentListActivity.this, "Data received", Toast.LENGTH_LONG).show();
+                } if (counter < mResidentIds.size() - 1) {
+                    getResidentNameAndUrl(i + 1);
+                }
+                counter++;
+            }
+        });
+    }
+
+  /*  // Get all data from API and save it in ResidentKamino
     private void getResidentNameAndUrl() {
         mNames = new ArrayList<String>();
         mUrls = new ArrayList<String>();
         for (int i =0; i < mResidentIds.size(); i++) {
             String id = mResidentIds.get(i).toString();
+            Log.d("id","string: " + mResidentIds.get(i));
             mNetworking.getResident(id, new Networking.ResidentDataListener() {
                 @Override
                 public void onResponseError(String errorMessage) {
@@ -69,18 +105,16 @@ public class ResidentListActivity extends AppCompatActivity {
                 public void onResidentResponseSuccess(ResidentKamino residentKamino) {
                     mNames.add(residentKamino.getName());
                     mUrls.add(residentKamino.getImageUrl());
-
+                    Log.d("id", "name: " + residentKamino.getName());
                     if (counter >= mResidentIds.size() - 1) {
                         generateList();
                         Toast.makeText(ResidentListActivity.this, "Data received", Toast.LENGTH_LONG).show();
                     }
                     counter ++;
                 }
-
             });
         }
-
-    }
+    }*/
 
     private void generateList(){
         RecyclerView recList = (RecyclerView) findViewById(R.id.cardList);
@@ -100,7 +134,8 @@ public class ResidentListActivity extends AppCompatActivity {
             ContactInfo ci = new ContactInfo();
             ci.ciResidentName = mNames.get(i);
             ci.ciResidentUrl = mUrls.get(i);
-
+            ci.ciResidentId = mResidentIds.get(i).toString();
+            Log.d("resident","name: " + mNames.get(i));
             result.add(ci);
         }
         return result;
@@ -109,5 +144,6 @@ public class ResidentListActivity extends AppCompatActivity {
     public class ContactInfo {
         public String ciResidentName;
         public String ciResidentUrl;
+        public String ciResidentId;
     }
 }

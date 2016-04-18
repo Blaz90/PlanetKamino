@@ -239,6 +239,32 @@ public class Networking extends Activity {
         return planetKamino;
     }
 
+    // fill PlanetKamino object with data from API
+    /*
+    private PlanetKamino getArrayIds(String jsonData) throws JSONException {
+        JSONObject residents = new JSONObject(jsonData);
+
+        PlanetKamino planetKamino = new PlanetKamino();
+
+        getResidentIds(residents);
+        planetKamino.setResidentIds(mResidentIds);
+        Log.d("planet kamino","array: " + mResidentIds);
+
+        return planetKamino;
+    }
+    */
+
+    /*private ResidentList getNamesAndPictures(String jsonData) throws JSONException{
+        JSONObject residents = new JSONObject(jsonData);
+        ResidentList residentKamino = new ResidentList();
+
+        ArrayList residentNames = new ArrayList();
+        residentNames.add(0, residents.getString("name"));
+        residentKamino.setResidentNames(residentNames);
+
+        return residentKamino;
+    }*/
+
     // get IDs from residents of planet, if ID is repeated do not write it in array
     private void getResidentIds(JSONObject jsonObject){
         JSONArray jsonArray;
