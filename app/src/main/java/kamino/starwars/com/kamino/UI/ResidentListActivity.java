@@ -8,11 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +24,11 @@ public class ResidentListActivity extends AppCompatActivity {
 
     Networking mNetworking;
     private String mObject;
-    private String mId;
-    private TextView mResidentName;
-    private ImageView mResidentImage;
     private ArrayList mResidentIds;
     private ArrayList<String> mNames;
     private ArrayList<String> mUrls;
     private int counter;
+    private int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,51 +37,48 @@ public class ResidentListActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         mResidentIds = intent.getParcelableArrayListExtra("residentIds");
-        counter = 0;
         Toast.makeText(ResidentListActivity.this, "Loading data..", Toast.LENGTH_SHORT).show();
         mObject = "residents";
         mNetworking = new Networking();
 
-        getResidentNameAndUrl();
-
+        mNames = new ArrayList<String>();
+        mUrls = new ArrayList<String>();
+        counter = 0;
+        i = 0;
+        getResidentNameAndUrl(i);
     }
 
     // Get all data from API and save it in ResidentKamino
-    private void getResidentNameAndUrl() {
-        mNames = new ArrayList<String>();
-        mUrls = new ArrayList<String>();
-        for (int i =0; i < mResidentIds.size(); i++) {
-            String id = mResidentIds.get(i).toString();
-            mNetworking.getResident(id, new Networking.ResidentDataListener() {
-                @Override
-                public void onResponseError(String errorMessage) {
-                    Log.e("response", errorMessage);
+    private void getResidentNameAndUrl(final int i) {
+
+        String id = mResidentIds.get(i).toString();
+        mNetworking.getResident(id, new Networking.ResidentDataListener() {
+            @Override
+            public void onResponseError(String errorMessage) {
+                Log.e("response", errorMessage);
+            }
+
+            @Override
+            public void onResidentResponseSuccess(ResidentKamino residentKamino) {
+                mNames.add(residentKamino.getName());
+                mUrls.add(residentKamino.getImageUrl());
+                if (counter >= mResidentIds.size() - 1) {
+                    generateList();
+                    Toast.makeText(ResidentListActivity.this, "Data received", Toast.LENGTH_LONG).show();
+                } if (counter < mResidentIds.size() - 1) {
+                    getResidentNameAndUrl(i + 1);
                 }
-
-                @Override
-                public void onResidentResponseSuccess(ResidentKamino residentKamino) {
-                    mNames.add(residentKamino.getName());
-                    mUrls.add(residentKamino.getImageUrl());
-
-                    if (counter >= mResidentIds.size() - 1) {
-                        generateList();
-                    }
-                    counter ++;
-                }
-
-            });
-        }
-
+                counter++;
+            }
+        });
     }
 
     private void generateList(){
         RecyclerView recList = (RecyclerView) findViewById(R.id.cardList);
-        //recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
-        //llm.setReverseLayout(true);
         recList.setLayoutManager(llm);
-        ResidentsAdapter ca = new ResidentsAdapter(createList());
+        ResidentsAdapter ca = new ResidentsAdapter(createList(), mResidentIds);
         recList.setAdapter(ca);
     }
 
@@ -97,7 +88,8 @@ public class ResidentListActivity extends AppCompatActivity {
 
             ContactInfo ci = new ContactInfo();
             ci.ciResidentName = mNames.get(i);
-
+            ci.ciResidentUrl = mUrls.get(i);
+            ci.ciResidentId = mResidentIds.get(i).toString();
             result.add(ci);
         }
         return result;
@@ -105,6 +97,7 @@ public class ResidentListActivity extends AppCompatActivity {
 
     public class ContactInfo {
         public String ciResidentName;
-
+        public String ciResidentUrl;
+        public String ciResidentId;
     }
 }

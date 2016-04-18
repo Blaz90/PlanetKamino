@@ -1,13 +1,20 @@
 package kamino.starwars.com.kamino.UI;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 import java.util.List;
+
 import kamino.starwars.com.kamino.R;
 
 
@@ -16,10 +23,13 @@ import kamino.starwars.com.kamino.R;
  */
 public class ResidentsAdapter extends RecyclerView.Adapter<ResidentsAdapter.ViewHolder> {
 
+    public ArrayList mArrayList;
+
     private List<ResidentListActivity.ContactInfo> contactList;
 
-    public ResidentsAdapter(List<ResidentListActivity.ContactInfo> contactList) {
+    public ResidentsAdapter(List<ResidentListActivity.ContactInfo> contactList, ArrayList residentIds) {
         this.contactList = contactList;
+        mArrayList = residentIds;
     }
 
     @Override
@@ -29,9 +39,7 @@ public class ResidentsAdapter extends RecyclerView.Adapter<ResidentsAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder contactViewHolder, int i) {
-
-        ResidentListActivity.ContactInfo ci = contactList.get(i);
-        contactViewHolder.vFullName.setText(ci.ciResidentName);
+        contactViewHolder.bind(contactList.get(i));
 
     }
 
@@ -44,7 +52,7 @@ public class ResidentsAdapter extends RecyclerView.Adapter<ResidentsAdapter.View
         return new ViewHolder(itemView);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         protected TextView vFullName;
         protected ImageView vImageView;
@@ -52,7 +60,23 @@ public class ResidentsAdapter extends RecyclerView.Adapter<ResidentsAdapter.View
         public ViewHolder(View v) {
             super(v);
             vFullName =  (TextView) v.findViewById(R.id.residentName);
+            vImageView = (ImageView) itemView.findViewById(R.id.residentImage);
 
+            v.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Context context = itemView.getContext();
+            Intent intent = new Intent(context, ResidentDetailsActivity.class);
+            intent.putExtra("residentIds", mArrayList);
+            intent.putExtra("position", getAdapterPosition());
+            context.startActivity(intent);
+        }
+
+        public void bind(final ResidentListActivity.ContactInfo item) {
+            vFullName.setText(item.ciResidentName);
+            Picasso.with(itemView.getContext()).load(item.ciResidentUrl).into(vImageView);
         }
     }
 }

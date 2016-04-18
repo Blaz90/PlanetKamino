@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         getPlanetData();
         bigImageListener();
         likePlanetListener();
-
     }
 
     // This method listens for user click on planet image
@@ -52,7 +51,9 @@ public class MainActivity extends AppCompatActivity {
         mPlanetImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openImage();
+                if (mPlanetKamino != null) {
+                    openImage();
+                }
             }
         });
     }
@@ -61,13 +62,6 @@ public class MainActivity extends AppCompatActivity {
     private void openImage() {
         Intent intent = new Intent(this, BigImageActivity.class);
         intent.putExtra("image", mPlanetKamino.getImageUrl());
-        startActivity(intent);
-
-    }
-
-    private void openResidentList(){
-        Intent intent = new Intent(this, ResidentListActivity.class);
-        intent.putExtra("residentIds", mPlanetKamino.getResidentIds());
         startActivity(intent);
     }
 
@@ -92,9 +86,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                 }
-
-                openResidentList();
-
             }
         });
 
@@ -130,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         TextView diameter = (TextView)findViewById(R.id.diameterValue);
         TextView climate = (TextView)findViewById(R.id.climateValue);
         TextView gravity = (TextView)findViewById(R.id.gravityValue);
-        // residents
+        TextView residents = (TextView)findViewById(R.id.residentsValue);
         TextView terrain = (TextView)findViewById(R.id.terrainValue);
         TextView surfaceWater = (TextView)findViewById(R.id.surfaceValue);
         TextView population = (TextView)findViewById(R.id.populationValue);
@@ -140,14 +131,13 @@ public class MainActivity extends AppCompatActivity {
 
         TextView like = (TextView)findViewById(R.id.likeValue);
 
-
         planetName.setText(planetKamino.getName());
         rotationPeriod.setText(planetKamino.getRotationPeriod());
         orbitalPeriod.setText(planetKamino.getOrbitalPeriod());
         diameter.setText(planetKamino.getDiameter());
         climate.setText(planetKamino.getClimate());
         gravity.setText(planetKamino.getGravity());
-        // residents
+        residents.setText(planetKamino.getResidents());
         terrain.setText(planetKamino.getTerrain());
         surfaceWater.setText(planetKamino.getSurfaceWater());
         population.setText(planetKamino.getPopulation());
@@ -175,10 +165,26 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_home) {
+            openPlanetKamino();
+            return true;
+        } else if (id == R.id.action_residents){
+            openResidentList();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private void openResidentList(){
+        Intent intent = new Intent(this, ResidentListActivity.class);
+        intent.putExtra("residentIds", mPlanetKamino.getResidentIds());
+        startActivity(intent);
+    }
+
+    private void openPlanetKamino(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
 }
