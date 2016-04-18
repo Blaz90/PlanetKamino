@@ -19,6 +19,7 @@ import java.util.List;
 
 import kamino.starwars.com.kamino.R;
 import kamino.starwars.com.kamino.model.Networking;
+import kamino.starwars.com.kamino.model.PlanetKamino;
 import kamino.starwars.com.kamino.model.ResidentKamino;
 
 /**
@@ -71,6 +72,7 @@ public class ResidentListActivity extends AppCompatActivity {
 
                     if (counter >= mResidentIds.size() - 1) {
                         generateList();
+                        Toast.makeText(ResidentListActivity.this, "Data received", Toast.LENGTH_LONG).show();
                     }
                     counter ++;
                 }
@@ -87,7 +89,7 @@ public class ResidentListActivity extends AppCompatActivity {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         //llm.setReverseLayout(true);
         recList.setLayoutManager(llm);
-        ResidentsAdapter ca = new ResidentsAdapter(createList());
+        ResidentsAdapter ca = new ResidentsAdapter(createList(), mResidentIds);
         recList.setAdapter(ca);
     }
 

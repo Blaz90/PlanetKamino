@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 import kamino.starwars.com.kamino.R;
 
@@ -19,10 +20,13 @@ import kamino.starwars.com.kamino.R;
  */
 public class ResidentsAdapter extends RecyclerView.Adapter<ResidentsAdapter.ViewHolder> {
 
+    public ArrayList mArrayList;
+
     private List<ResidentListActivity.ContactInfo> contactList;
 
-    public ResidentsAdapter(List<ResidentListActivity.ContactInfo> contactList) {
+    public ResidentsAdapter(List<ResidentListActivity.ContactInfo> contactList, ArrayList residentIds) {
         this.contactList = contactList;
+        mArrayList = residentIds;
     }
 
     @Override
@@ -33,6 +37,7 @@ public class ResidentsAdapter extends RecyclerView.Adapter<ResidentsAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder contactViewHolder, int i) {
         contactViewHolder.bind(contactList.get(i));
+
 
     }
 
@@ -45,7 +50,7 @@ public class ResidentsAdapter extends RecyclerView.Adapter<ResidentsAdapter.View
         return new ViewHolder(itemView);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         protected TextView vFullName;
         protected ImageView vImageView;
@@ -60,7 +65,8 @@ public class ResidentsAdapter extends RecyclerView.Adapter<ResidentsAdapter.View
 
         @Override
         public void onClick(View v) {
-            Log.d("OnClick", "blabla" + getItemViewType());
+            Log.d("OnClick", "blabla" + mArrayList.get(getAdapterPosition()));
+            mArrayList.get(getAdapterPosition());
         }
 
         public void bind(final ResidentListActivity.ContactInfo item) {
