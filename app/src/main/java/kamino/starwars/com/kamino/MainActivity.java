@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         getPlanetData();
         bigImageListener();
         likePlanetListener();
-
     }
 
     // This method listens for user click on planet image
@@ -62,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, BigImageActivity.class);
         intent.putExtra("image", mPlanetKamino.getImageUrl());
         startActivity(intent);
-
     }
 
     private void openResidentList(){
@@ -130,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         TextView diameter = (TextView)findViewById(R.id.diameterValue);
         TextView climate = (TextView)findViewById(R.id.climateValue);
         TextView gravity = (TextView)findViewById(R.id.gravityValue);
-        // residents
+        TextView residents = (TextView)findViewById(R.id.residentsValue);
         TextView terrain = (TextView)findViewById(R.id.terrainValue);
         TextView surfaceWater = (TextView)findViewById(R.id.surfaceValue);
         TextView population = (TextView)findViewById(R.id.populationValue);
@@ -140,14 +138,13 @@ public class MainActivity extends AppCompatActivity {
 
         TextView like = (TextView)findViewById(R.id.likeValue);
 
-
         planetName.setText(planetKamino.getName());
         rotationPeriod.setText(planetKamino.getRotationPeriod());
         orbitalPeriod.setText(planetKamino.getOrbitalPeriod());
         diameter.setText(planetKamino.getDiameter());
         climate.setText(planetKamino.getClimate());
         gravity.setText(planetKamino.getGravity());
-        // residents
+        residents.setText(planetKamino.getResidents());
         terrain.setText(planetKamino.getTerrain());
         surfaceWater.setText(planetKamino.getSurfaceWater());
         population.setText(planetKamino.getPopulation());

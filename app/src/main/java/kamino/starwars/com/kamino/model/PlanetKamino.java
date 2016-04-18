@@ -1,5 +1,7 @@
 package kamino.starwars.com.kamino.model;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -106,7 +108,7 @@ public class PlanetKamino {
 
 
     public void setEdited(String edited) {
-        mEdited = edited;
+        mEdited = formatDateAndTime(edited);
     }
 
     public String getCreated() {
@@ -114,7 +116,7 @@ public class PlanetKamino {
     }
 
     public void setCreated(String created) {
-        mCreated = created;
+        mCreated = formatDateAndTime(created);
     }
 
     public String getLikes() {
@@ -147,6 +149,11 @@ public class PlanetKamino {
 
     public void setResidentIds(ArrayList residentIds) {
         mResidentIds = residentIds;
+    }
+
+    public String formatDateAndTime(String dateTime){
+        dateTime = dateTime.substring(0, 10) + "\n" + dateTime.substring(11, 19);
+        return dateTime;
     }
 
 }
