@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     private void openImage() {
         Intent intent = new Intent(this, BigImageActivity.class);
         intent.putExtra("image", mPlanetKamino.getImageUrl());
+        intent.putExtra("residentIds", mPlanetKamino.getResidentIds());
         startActivity(intent);
     }
 
@@ -158,16 +159,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_home) {
             openPlanetKamino();
             return true;
-        } else if (id == R.id.action_residents){
+        } else if (id == R.id.action_residents && mPlanetKamino != null){
             openResidentList();
             return true;
         }

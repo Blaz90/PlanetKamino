@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -100,4 +102,5 @@ public class ResidentListActivity extends AppCompatActivity {
         public String ciResidentUrl;
         public String ciResidentId;
     }
+
 }
