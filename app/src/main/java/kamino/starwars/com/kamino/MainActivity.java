@@ -34,11 +34,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mClicked = false;
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getActionBar().setHomeButtonEnabled(true);
+
+        mClicked = false;
 
         getPlanetData();
         bigImageListener();

@@ -60,7 +60,7 @@ public class BigImageActivity extends AppCompatActivity {
             onBackPressed();
             return true;
         }
-        
+
         return super.onOptionsItemSelected(item);
     }
 
