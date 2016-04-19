@@ -25,10 +25,8 @@
     <string name="eye_color_label">Eye color</string>
     <string name="other_data_label">Other data</string>
     <string name="empty_value">/</string>
-    <string name="title_activity_activity_image">/</string>
+    <string name="title_activity_one_resident">One resident</string>
     <string name="title_activity_kamino_picture">Planet image</string>
-    <string name="title_activity_main2">/</string>
-    <string name="title_activity_all_residents">AllResidentsActivity</string>
-
+    <string name="title_activity_all_residents">Residents</string>
 
 </resources>

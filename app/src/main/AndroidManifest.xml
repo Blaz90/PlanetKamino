@@ -23,14 +23,17 @@
         </activity>
         <activity
             android:name=".UI.BigImageActivity"
+            android:label="@string/title_activity_kamino_picture"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".UI.ResidentListActivity"
+            android:label="@string/title_activity_all_residents"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".UI.ResidentDetailsActivity"
+            android:label="@string/title_activity_one_resident"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
