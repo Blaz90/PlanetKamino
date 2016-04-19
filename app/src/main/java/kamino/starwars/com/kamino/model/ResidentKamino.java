@@ -47,7 +47,7 @@ public class ResidentKamino {
     }
 
     public void setEdited(String edited) {
-        mEdited = edited;
+        mEdited = formatDateAndTime(edited);
     }
 
     public String getCreated() {
@@ -55,7 +55,7 @@ public class ResidentKamino {
     }
 
     public void setCreated(String created) {
-        mCreated = created;
+        mCreated = formatDateAndTime(created);
     }
 
     public String getHomeworld() {
@@ -112,5 +112,10 @@ public class ResidentKamino {
 
     public void setMass(String mass) {
         mMass = mass;
+    }
+
+    public String formatDateAndTime(String dateTime){
+        dateTime = dateTime.substring(0, 10) + ", " + dateTime.substring(11, 19);
+        return dateTime;
     }
 }

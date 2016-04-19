@@ -10,12 +10,15 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import kamino.starwars.com.kamino.MainActivity;
 import kamino.starwars.com.kamino.R;
@@ -23,6 +26,8 @@ import kamino.starwars.com.kamino.R;
 public class BigImageActivity extends AppCompatActivity {
 
     ImageView planetBigImage;
+
+    private ArrayList mResidentIds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +38,10 @@ public class BigImageActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String planetImage = intent.getStringExtra("image");
+        mResidentIds = intent.getParcelableArrayListExtra("residentIds");
 
         planetBigImage = (ImageView)findViewById(R.id.planetBigImage);
         Picasso.with(getApplicationContext()).load(planetImage).into(planetBigImage);
-
     }
+
 }
