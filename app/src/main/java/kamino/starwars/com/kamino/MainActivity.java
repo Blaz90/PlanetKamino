@@ -24,8 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     Networking mNetworking;
     PlanetKamino mPlanetKamino;
-    private String mObject;
-    private String mId;
+
     private ImageView mLikeButton;
     private ImageView mPlanetImage;
     private boolean mClicked;
@@ -61,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
     private void openImage() {
         Intent intent = new Intent(this, BigImageActivity.class);
         intent.putExtra("image", mPlanetKamino.getImageUrl());
-        intent.putExtra("residentIds", mPlanetKamino.getResidentIds());
         startActivity(intent);
     }
 
@@ -128,7 +126,6 @@ public class MainActivity extends AppCompatActivity {
         TextView created = (TextView)findViewById(R.id.createdValue);
         TextView edited = (TextView)findViewById(R.id.editedValue);
         ImageView image = (ImageView)findViewById(R.id.planetImage);
-
         TextView like = (TextView)findViewById(R.id.likeValue);
 
         planetName.setText(planetKamino.getName());
@@ -144,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
         created.setText(planetKamino.getCreated());
         edited.setText(planetKamino.getEdited());
         Picasso.with(getApplicationContext()).load(mPlanetKamino.getImageUrl()).into(image);
-
         like.setText(mPlanetKamino.getLikes());
 
     }
@@ -159,7 +155,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_home) {
             openPlanetKamino();
@@ -168,17 +163,16 @@ public class MainActivity extends AppCompatActivity {
             openResidentList();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
-
+    // This method open ResidentListActivity
     private void openResidentList(){
         Intent intent = new Intent(this, ResidentListActivity.class);
         intent.putExtra("residentIds", mPlanetKamino.getResidentIds());
         startActivity(intent);
     }
-
+    // This method reopen MainActivity - refresh first screen
     private void openPlanetKamino(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
