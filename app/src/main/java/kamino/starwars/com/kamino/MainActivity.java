@@ -22,12 +22,12 @@ import kamino.starwars.com.kamino.model.PlanetKamino;
 
 public class MainActivity extends AppCompatActivity {
 
-    Networking mNetworking;
-    PlanetKamino mPlanetKamino;
-
+    private Networking mNetworking;
+    private PlanetKamino mPlanetKamino;
     private ImageView mLikeButton;
     private ImageView mPlanetImage;
     private boolean mClicked;
+    private String mPlanetId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mClicked = false;
+        mPlanetId = "10";
 
         getPlanetData();
         bigImageListener();
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     private void getPlanetData() {
         Toast.makeText(MainActivity.this, "Loading data..", Toast.LENGTH_SHORT).show();
         mNetworking = new Networking();
-        mNetworking.getPlanet(new Networking.PlanetDataListener() {
+        mNetworking.getPlanet(mPlanetId, new Networking.PlanetDataListener() {
 
             @Override
             public void onResponseError(String errorMessage) {
@@ -170,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
     private void openResidentList(){
         Intent intent = new Intent(this, ResidentListActivity.class);
         intent.putExtra("residentIds", mPlanetKamino.getResidentIds());
+        intent.putExtra("planetName", mPlanetKamino.getName());
         startActivity(intent);
     }
     // This method reopen MainActivity - refresh first screen

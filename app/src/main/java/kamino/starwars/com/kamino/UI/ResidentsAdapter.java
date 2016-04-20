@@ -22,13 +22,14 @@ import kamino.starwars.com.kamino.R;
  */
 public class ResidentsAdapter extends RecyclerView.Adapter<ResidentsAdapter.ViewHolder> {
 
-    public ArrayList mResidentsIds;
-
     private List<ResidentListActivity.ResidentInfo> mResidentList;
+    private ArrayList mResidentsIds;
+    private String mPlanetName;
 
-    public ResidentsAdapter(List<ResidentListActivity.ResidentInfo> mResidentList, ArrayList residentIds) {
+    public ResidentsAdapter(List<ResidentListActivity.ResidentInfo> mResidentList, ArrayList residentIds, String planetName) {
         this.mResidentList = mResidentList;
         mResidentsIds = residentIds;
+        mPlanetName = planetName;
     }
 
     @Override
@@ -64,11 +65,13 @@ public class ResidentsAdapter extends RecyclerView.Adapter<ResidentsAdapter.View
             v.setOnClickListener(this);
         }
 
+        // onClick go to ResidentDetailsActivity
         @Override
         public void onClick(View v) {
             Context context = itemView.getContext();
             Intent intent = new Intent(context, ResidentDetailsActivity.class);
             intent.putExtra("residentIds", mResidentsIds);
+            intent.putExtra("planetName", mPlanetName);
             intent.putExtra("position", getAdapterPosition());
             context.startActivity(intent);
         }

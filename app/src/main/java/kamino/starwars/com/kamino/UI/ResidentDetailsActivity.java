@@ -28,6 +28,7 @@ public class ResidentDetailsActivity extends AppCompatActivity {
 
     private ArrayList mResidentIds;
     private int mPosition;
+    private String mPlanetName;
 
     Networking mNetworking;
 
@@ -41,16 +42,16 @@ public class ResidentDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         mResidentIds = intent.getParcelableArrayListExtra("residentIds");
         mPosition = intent.getIntExtra("position", 0);
-
-        getResidentDetails(mPosition);
-        getResidentHomeworld();
+        mPlanetName = intent.getStringExtra("planetName");
+        getResidentDetails(mPosition, mPlanetName);
+        // getResidentHomeworld();
     }
 
-    private void getResidentDetails(int position) {
+    private void getResidentDetails(int position, String planetName) {
         Toast.makeText(ResidentDetailsActivity.this, "Loading data..", Toast.LENGTH_SHORT).show();
         String id = mResidentIds.get(position).toString();
         mNetworking = new Networking();
-        mNetworking.getResident(id, new Networking.ResidentDataListener() {
+        mNetworking.getResident(id, planetName, new Networking.ResidentDataListener() {
             @Override
             public void onResponseError(String errorMessage) {
                 Log.e("response", errorMessage);
@@ -60,11 +61,12 @@ public class ResidentDetailsActivity extends AppCompatActivity {
             public void onResidentResponseSuccess(ResidentKamino residentKamino) {
                 Toast.makeText(ResidentDetailsActivity.this, "Data received", Toast.LENGTH_LONG).show();
                 updateDisplay(residentKamino);
+                Log.d("resident", "Homeworld: " + residentKamino.getHomeworld());
             }
         });
     }
 
-    private void getResidentHomeworld() {
+/*    private void getResidentHomeworld() {
         mNetworking = new Networking();
         mNetworking.getPlanet(new Networking.PlanetDataListener() {
 
@@ -79,12 +81,12 @@ public class ResidentDetailsActivity extends AppCompatActivity {
                 updateHomeworld(planetKamino);
             }
         });
-    }
+    }*/
 
-    private void updateHomeworld(PlanetKamino planetKamino) {
+/*    private void updateHomeworld(PlanetKamino planetKamino) {
         TextView homeworldName = (TextView)findViewById(R.id.homeworldValue);
         homeworldName.setText(planetKamino.getName());
-    }
+    }*/
 
     private void updateDisplay(ResidentKamino residentKamino) {
         ImageView image = (ImageView)findViewById(R.id.residentImage);
@@ -98,6 +100,8 @@ public class ResidentDetailsActivity extends AppCompatActivity {
         TextView eyeColor = (TextView)findViewById(R.id.eyeColorValue);
         TextView created = (TextView)findViewById(R.id.createdValue);
         TextView edited = (TextView)findViewById(R.id.editedValue);
+        TextView homeworldName = (TextView)findViewById(R.id.homeworldValue);
+
 
         Picasso.with(getApplicationContext()).load(residentKamino.getImageUrl()).into(image);
         residentName.setText(residentKamino.getName());
@@ -110,6 +114,7 @@ public class ResidentDetailsActivity extends AppCompatActivity {
         eyeColor.setText(residentKamino.getEyeColor());
         created.setText(residentKamino.getCreated());
         edited.setText(residentKamino.getEdited());
+        homeworldName.setText(residentKamino.getHomeworld());
     }
 
     @Override

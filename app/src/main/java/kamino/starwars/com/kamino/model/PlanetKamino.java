@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 public class PlanetKamino {
 
+    private String mId;
     private String mName;
     private String mRotationPeriod;
     private String mOrbitalPeriod;
@@ -23,6 +24,13 @@ public class PlanetKamino {
     private String mResidents;
     private ArrayList mResidentIds;
 
+    public String getId() {
+        return mId;
+    }
+
+    public void setId(String id) {
+        mId = id;
+    }
 
     public String getName() {
         return mName;
