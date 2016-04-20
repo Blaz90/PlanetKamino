@@ -41,7 +41,7 @@ public class Networking extends Activity {
         void onResidentResponseSuccess(ResidentKamino residentKamino);
     }
 
-    // API request call - get data
+    // API request call - get planet data
     public void getPlanet(final String planetId, final PlanetDataListener dataListener) {
         String object = "planets";
         API_REQ_URL = API_BASE_URL + object + "/" + planetId;
@@ -82,6 +82,7 @@ public class Networking extends Activity {
         });
     }
 
+    // API request call - get resident data
     public void getResident(String residentId, final String planetName,final ResidentDataListener dataListener) {
         String object = "residents";
         API_REQ_URL = API_BASE_URL + object + "/" + residentId;
