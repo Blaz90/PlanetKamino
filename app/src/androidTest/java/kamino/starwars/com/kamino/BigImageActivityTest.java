@@ -14,6 +14,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import kamino.starwars.com.kamino.UI.BigImageActivity;
+
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -24,23 +26,15 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest {
+public class BigImageActivityTest {
 
     @Rule
-    public ActivityTestRule<MainActivity> activityTestRule =
-            new ActivityTestRule<>(MainActivity.class);
+    public ActivityTestRule<BigImageActivity> bigImageActivity =
+            new ActivityTestRule<>(BigImageActivity.class);
 
-    // Looks for an EditText with id = "R.id.etInput"
-    // Types the text "Hello" into the EditText
-    // Verifies the EditText has text "Hello"
     @Test
-    public void itemClick() {
-        onView(withId(R.id.likeImage)).perform(click());
-        onView(withId(R.id.planetImage)).perform(click());
-        onView(withId(R.id.action_residents)).perform(click());
-        onView(withId(R.id.action_home)).perform(click());
-
-        //onView(withId(R.id.planetName)).perform(typeText("Kamino"));
+    public void itemClickBigImageActivity() {
+        onView(withId(R.id.action_back)).perform(click());
     }
-
 }
+
