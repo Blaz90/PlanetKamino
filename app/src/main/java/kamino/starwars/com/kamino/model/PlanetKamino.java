@@ -108,7 +108,6 @@ public class PlanetKamino {
         return mEdited;
     }
 
-
     public void setEdited(String edited) {
         mEdited = formatDateAndTime(edited);
     }

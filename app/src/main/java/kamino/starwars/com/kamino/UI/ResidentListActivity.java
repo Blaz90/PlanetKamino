@@ -24,13 +24,13 @@ import kamino.starwars.com.kamino.model.ResidentKamino;
  */
 public class ResidentListActivity extends AppCompatActivity {
 
-    Networking mNetworking;
+    private Networking mNetworking;
     private ArrayList mResidentIds;
     private ArrayList<String> mNames;
     private ArrayList<String> mUrls;
+    private String mPlanetName;
     private int counter;
     private int i;
-    private String mPlanetName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,8 +131,10 @@ public class ResidentListActivity extends AppCompatActivity {
     private void openResidentList(){
         Intent intent = new Intent(this, ResidentListActivity.class);
         intent.putExtra("residentIds", mResidentIds);
+        intent.putExtra("planetName", mPlanetName);
         startActivity(intent);
     }
+
     // This method open MainActivity - first activity
     private void openPlanetKamino(){
         Intent intent = new Intent(this, MainActivity.class);

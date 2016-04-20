@@ -1,7 +1,5 @@
 package kamino.starwars.com.kamino.model;
 
-import android.util.Log;
-import android.widget.Toast;
 
 /**
  * Created by blazzajec on 12/04/16.
@@ -68,7 +66,6 @@ public class ResidentKamino {
     public void setHomeworld(String planetName) {
         mHomeworld = planetName;
     }
-
 
     public String getBirthYear() {
         return mBirthYear;

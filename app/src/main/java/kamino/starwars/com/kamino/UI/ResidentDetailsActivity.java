@@ -26,11 +26,10 @@ import kamino.starwars.com.kamino.model.ResidentKamino;
  */
 public class ResidentDetailsActivity extends AppCompatActivity {
 
+    private Networking mNetworking;
     private ArrayList mResidentIds;
-    private int mPosition;
     private String mPlanetName;
-
-    Networking mNetworking;
+    private int mPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +43,9 @@ public class ResidentDetailsActivity extends AppCompatActivity {
         mPosition = intent.getIntExtra("position", 0);
         mPlanetName = intent.getStringExtra("planetName");
         getResidentDetails(mPosition, mPlanetName);
-        // getResidentHomeworld();
     }
 
+    // Get all data from API and save it in ResidentKamino.
     private void getResidentDetails(int position, String planetName) {
         Toast.makeText(ResidentDetailsActivity.this, "Loading data..", Toast.LENGTH_SHORT).show();
         String id = mResidentIds.get(position).toString();
@@ -61,33 +60,11 @@ public class ResidentDetailsActivity extends AppCompatActivity {
             public void onResidentResponseSuccess(ResidentKamino residentKamino) {
                 Toast.makeText(ResidentDetailsActivity.this, "Data received", Toast.LENGTH_LONG).show();
                 updateDisplay(residentKamino);
-                Log.d("resident", "Homeworld: " + residentKamino.getHomeworld());
             }
         });
     }
 
-/*    private void getResidentHomeworld() {
-        mNetworking = new Networking();
-        mNetworking.getPlanet(new Networking.PlanetDataListener() {
-
-            @Override
-            public void onResponseError(String errorMessage) {
-                Log.e("response", errorMessage);
-                Toast.makeText(ResidentDetailsActivity.this, errorMessage, Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onPlanetResponseSuccess(PlanetKamino planetKamino) {
-                updateHomeworld(planetKamino);
-            }
-        });
-    }*/
-
-/*    private void updateHomeworld(PlanetKamino planetKamino) {
-        TextView homeworldName = (TextView)findViewById(R.id.homeworldValue);
-        homeworldName.setText(planetKamino.getName());
-    }*/
-
+    // When data is succesfuly received, display it on screen
     private void updateDisplay(ResidentKamino residentKamino) {
         ImageView image = (ImageView)findViewById(R.id.residentImage);
         TextView residentName = (TextView)findViewById(R.id.residentName);
@@ -101,7 +78,6 @@ public class ResidentDetailsActivity extends AppCompatActivity {
         TextView created = (TextView)findViewById(R.id.createdValue);
         TextView edited = (TextView)findViewById(R.id.editedValue);
         TextView homeworldName = (TextView)findViewById(R.id.homeworldValue);
-
 
         Picasso.with(getApplicationContext()).load(residentKamino.getImageUrl()).into(image);
         residentName.setText(residentKamino.getName());
@@ -127,13 +103,11 @@ public class ResidentDetailsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_back) {
             onBackPressed();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

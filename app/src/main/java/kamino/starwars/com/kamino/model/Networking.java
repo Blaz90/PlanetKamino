@@ -14,18 +14,17 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
-
 /**
  * Created by Blaž on 11.04.2016.
  */
 public class Networking extends Activity {
-    private final static String LOG_TAG = ".Networking";
 
+    private final static String LOG_TAG = ".Networking";
     private final static String API_BASE_URL = "http://private-anon-ffc6f083f-starwars2.apiary-mock.com/";
     private String API_REQ_URL;
 
-    StringEntity entity;
-    ArrayList<String> mResidentIds;
+    private StringEntity entity;
+    private ArrayList<String> mResidentIds;
 
     public interface LikeDataListener {
         void onResponseError(String errorMessage);
@@ -41,7 +40,6 @@ public class Networking extends Activity {
         void onResponseError(String errorMessage);
         void onResidentResponseSuccess(ResidentKamino residentKamino);
     }
-
 
     // API request call - get data
     public void getPlanet(final String planetId, final PlanetDataListener dataListener) {
@@ -61,12 +59,9 @@ public class Networking extends Activity {
 
                     dataListener.onPlanetResponseSuccess(savePlanetData(jsonData, planetId));
 
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
+                } catch (UnsupportedEncodingException | JSONException e) {
                     e.printStackTrace();
                 }
-                //Log.e("server said", jsonData);
             }
 
             @Override
@@ -104,12 +99,9 @@ public class Networking extends Activity {
 
                     dataListener.onResidentResponseSuccess(saveResidentData(jsonData, planetName));
 
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
+                } catch (UnsupportedEncodingException | JSONException e) {
                     e.printStackTrace();
                 }
-                //Log.e("server said", jsonData);
             }
 
             @Override
@@ -130,16 +122,13 @@ public class Networking extends Activity {
         });
     }
 
-
-
     // API request call - send data (like)
-    public void sendLike(final LikeDataListener dataListener) {
+    public void sendLike(String planetId, final LikeDataListener dataListener) {
         String object = "planets";
-        String id = "10";
         String like = "like";
-        API_REQ_URL = API_BASE_URL + object + "/" + id  + "/" + like;
+        API_REQ_URL = API_BASE_URL + object + "/" + planetId  + "/" + like;
         try {
-            entity = new StringEntity("{  'planet_id': "+ id +"}", "UTF-8");
+            entity = new StringEntity("{  'planet_id': "+ planetId +"}", "UTF-8");
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
             return;
@@ -155,7 +144,6 @@ public class Networking extends Activity {
                 Log.d("","jsonData: " + jsonData);
                 try {
                     jsonData = new String(responseBody, "UTF-8"); // for UTF-8 encoding
-                     //dataListener.onLikeResponseSuccess(mPlanetKamino);
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
