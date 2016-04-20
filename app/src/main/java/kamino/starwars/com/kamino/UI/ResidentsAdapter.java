@@ -3,7 +3,6 @@ package kamino.starwars.com.kamino.UI;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,23 +22,23 @@ import kamino.starwars.com.kamino.R;
  */
 public class ResidentsAdapter extends RecyclerView.Adapter<ResidentsAdapter.ViewHolder> {
 
-    public ArrayList mArrayList;
+    public ArrayList mResidentsIds;
 
-    private List<ResidentListActivity.ContactInfo> contactList;
+    private List<ResidentListActivity.ResidentInfo> mResidentList;
 
-    public ResidentsAdapter(List<ResidentListActivity.ContactInfo> contactList, ArrayList residentIds) {
-        this.contactList = contactList;
-        mArrayList = residentIds;
+    public ResidentsAdapter(List<ResidentListActivity.ResidentInfo> mResidentList, ArrayList residentIds) {
+        this.mResidentList = mResidentList;
+        mResidentsIds = residentIds;
     }
 
     @Override
     public int getItemCount() {
-        return contactList.size();
+        return mResidentList.size();
     }
 
     @Override
     public void onBindViewHolder(ViewHolder contactViewHolder, int i) {
-        contactViewHolder.bind(contactList.get(i));
+        contactViewHolder.bind(mResidentList.get(i));
 
     }
 
@@ -60,7 +59,7 @@ public class ResidentsAdapter extends RecyclerView.Adapter<ResidentsAdapter.View
         public ViewHolder(View v) {
             super(v);
             vFullName =  (TextView) v.findViewById(R.id.residentName);
-            vImageView = (ImageView) itemView.findViewById(R.id.residentImage);
+            vImageView = (ImageView) v.findViewById(R.id.residentImage);
 
             v.setOnClickListener(this);
         }
@@ -69,12 +68,12 @@ public class ResidentsAdapter extends RecyclerView.Adapter<ResidentsAdapter.View
         public void onClick(View v) {
             Context context = itemView.getContext();
             Intent intent = new Intent(context, ResidentDetailsActivity.class);
-            intent.putExtra("residentIds", mArrayList);
+            intent.putExtra("residentIds", mResidentsIds);
             intent.putExtra("position", getAdapterPosition());
             context.startActivity(intent);
         }
 
-        public void bind(final ResidentListActivity.ContactInfo item) {
+        public void bind(final ResidentListActivity.ResidentInfo item) {
             vFullName.setText(item.ciResidentName);
             Picasso.with(itemView.getContext()).load(item.ciResidentUrl).into(vImageView);
         }
