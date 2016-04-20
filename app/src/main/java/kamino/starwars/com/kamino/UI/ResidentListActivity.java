@@ -1,8 +1,6 @@
 package kamino.starwars.com.kamino.UI;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,7 +25,6 @@ import kamino.starwars.com.kamino.model.ResidentKamino;
 public class ResidentListActivity extends AppCompatActivity {
 
     Networking mNetworking;
-    private String mObject;
     private ArrayList mResidentIds;
     private ArrayList<String> mNames;
     private ArrayList<String> mUrls;
@@ -44,9 +41,7 @@ public class ResidentListActivity extends AppCompatActivity {
         Intent intent = getIntent();
         mResidentIds = intent.getParcelableArrayListExtra("residentIds");
         Toast.makeText(ResidentListActivity.this, "Loading data..", Toast.LENGTH_SHORT).show();
-        mObject = "residents";
         mNetworking = new Networking();
-
         mNames = new ArrayList<String>();
         mUrls = new ArrayList<String>();
         counter = 0;
@@ -57,7 +52,6 @@ public class ResidentListActivity extends AppCompatActivity {
 
     // Get all data from API and save it in ResidentKamino
     private void getResidentNameAndUrl(final int i) {
-
         String id = mResidentIds.get(i).toString();
         mNetworking.getResident(id, new Networking.ResidentDataListener() {
             @Override
@@ -80,6 +74,7 @@ public class ResidentListActivity extends AppCompatActivity {
         });
     }
 
+    // This method generate list of all residents
     private void generateList(){
         RecyclerView recList = (RecyclerView) findViewById(R.id.cardList);
         LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
@@ -89,11 +84,12 @@ public class ResidentListActivity extends AppCompatActivity {
         recList.setAdapter(ca);
     }
 
-    private List<ContactInfo> createList() {
-        final List<ContactInfo> result = new ArrayList<ContactInfo>();
+    // set name, URL and id for all residents
+    private List<ResidentInfo> createList() {
+        final List<ResidentInfo> result = new ArrayList<ResidentInfo>();
         for (int i=0; i < mResidentIds.size(); i++) {
 
-            ContactInfo ci = new ContactInfo();
+            ResidentInfo ci = new ResidentInfo();
             ci.ciResidentName = mNames.get(i);
             ci.ciResidentUrl = mUrls.get(i);
             ci.ciResidentId = mResidentIds.get(i).toString();
@@ -102,7 +98,7 @@ public class ResidentListActivity extends AppCompatActivity {
         return result;
     }
 
-    public class ContactInfo {
+    public class ResidentInfo {
         public String ciResidentName;
         public String ciResidentUrl;
         public String ciResidentId;
@@ -118,7 +114,6 @@ public class ResidentListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_home) {
             openPlanetKamino();
@@ -127,17 +122,16 @@ public class ResidentListActivity extends AppCompatActivity {
             openResidentList();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
-
+    // This method reopen ResidentListActivity - refresh screen
     private void openResidentList(){
         Intent intent = new Intent(this, ResidentListActivity.class);
         intent.putExtra("residentIds", mResidentIds);
         startActivity(intent);
     }
-
+    // This method open MainActivity - first activity
     private void openPlanetKamino(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
