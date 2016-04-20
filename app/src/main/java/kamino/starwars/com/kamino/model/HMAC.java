@@ -13,6 +13,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class HMAC {
 
+    // Convert string to hmac key
     public static String sStringToHMACMD5(String s, String keyString) {
         String sEncodedString = null;
         try
@@ -34,11 +35,7 @@ public class HMAC {
             }
             sEncodedString = hash.toString();
         }
-        catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch(InvalidKeyException e){
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        catch (UnsupportedEncodingException | InvalidKeyException | NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         return sEncodedString ;

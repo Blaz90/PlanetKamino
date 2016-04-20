@@ -14,20 +14,21 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
+
 import kamino.starwars.com.kamino.UI.ResidentListActivity;
 import kamino.starwars.com.kamino.UI.BigImageActivity;
 import kamino.starwars.com.kamino.model.Networking;
 import kamino.starwars.com.kamino.model.PlanetKamino;
 
-
 public class MainActivity extends AppCompatActivity {
 
-    Networking mNetworking;
-    PlanetKamino mPlanetKamino;
-
+    private Networking mNetworking;
+    private PlanetKamino mPlanetKamino;
     private ImageView mLikeButton;
     private ImageView mPlanetImage;
     private boolean mClicked;
+    private String mPlanetId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mClicked = false;
+        mClicked = false; // set flag for like button
+        mPlanetId = "10";
 
         getPlanetData();
         bigImageListener();
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!mClicked) {
                     mClicked = true;
-                    mNetworking.sendLike(new Networking.LikeDataListener() {
+                    mNetworking.sendLike(mPlanetId, new Networking.LikeDataListener() {
                         @Override
                         public void onResponseError(String errorMessage) {
                             Log.e("response", errorMessage);
@@ -86,14 +88,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     // Get all data from API and save it in PlanetKamino.
     private void getPlanetData() {
         Toast.makeText(MainActivity.this, "Loading data..", Toast.LENGTH_SHORT).show();
         mNetworking = new Networking();
-        mNetworking.getPlanet(new Networking.PlanetDataListener() {
+        mNetworking.getPlanet(mPlanetId, new Networking.PlanetDataListener() {
 
             @Override
             public void onResponseError(String errorMessage) {
@@ -109,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     // When data is succesfuly received, display it on screen
     public void updateDisplay(PlanetKamino planetKamino) {
@@ -142,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
         edited.setText(planetKamino.getEdited());
         Picasso.with(getApplicationContext()).load(mPlanetKamino.getImageUrl()).into(image);
         like.setText(mPlanetKamino.getLikes());
-
     }
 
     @Override
@@ -170,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
     private void openResidentList(){
         Intent intent = new Intent(this, ResidentListActivity.class);
         intent.putExtra("residentIds", mPlanetKamino.getResidentIds());
+        intent.putExtra("planetName", mPlanetKamino.getName());
         startActivity(intent);
     }
     // This method reopen MainActivity - refresh first screen
@@ -177,5 +177,4 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
-
 }

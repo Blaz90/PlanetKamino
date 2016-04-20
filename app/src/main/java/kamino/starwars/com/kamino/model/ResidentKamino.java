@@ -1,5 +1,6 @@
 package kamino.starwars.com.kamino.model;
 
+
 /**
  * Created by blazzajec on 12/04/16.
  */
@@ -62,8 +63,8 @@ public class ResidentKamino {
         return mHomeworld;
     }
 
-    public void setHomeworld(String homeworld) {
-        mHomeworld = homeworld;
+    public void setHomeworld(String planetName) {
+        mHomeworld = planetName;
     }
 
     public String getBirthYear() {

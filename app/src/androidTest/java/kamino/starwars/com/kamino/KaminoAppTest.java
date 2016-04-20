@@ -4,13 +4,10 @@ package kamino.starwars.com.kamino;
  * Created by blazzajec on 19/04/16.
  */
 
-import android.support.test.espresso.Espresso;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +26,6 @@ public class KaminoAppTest {
     @Rule
     public ActivityTestRule<MainActivity> activityTestRule =
             new ActivityTestRule<>(MainActivity.class);
-
 
     @Test
     public void itemClickMainActivity() throws InterruptedException {

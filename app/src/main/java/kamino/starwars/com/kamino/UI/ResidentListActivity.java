@@ -24,10 +24,11 @@ import kamino.starwars.com.kamino.model.ResidentKamino;
  */
 public class ResidentListActivity extends AppCompatActivity {
 
-    Networking mNetworking;
+    private Networking mNetworking;
     private ArrayList mResidentIds;
     private ArrayList<String> mNames;
     private ArrayList<String> mUrls;
+    private String mPlanetName;
     private int counter;
     private int i;
 
@@ -37,10 +38,11 @@ public class ResidentListActivity extends AppCompatActivity {
         setContentView(R.layout.residents_all);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Toast.makeText(ResidentListActivity.this, "Loading data..", Toast.LENGTH_SHORT).show();
 
         Intent intent = getIntent();
         mResidentIds = intent.getParcelableArrayListExtra("residentIds");
-        Toast.makeText(ResidentListActivity.this, "Loading data..", Toast.LENGTH_SHORT).show();
+        mPlanetName = intent.getStringExtra("planetName");
         mNetworking = new Networking();
         mNames = new ArrayList<String>();
         mUrls = new ArrayList<String>();
@@ -53,7 +55,7 @@ public class ResidentListActivity extends AppCompatActivity {
     // Get all data from API and save it in ResidentKamino
     private void getResidentNameAndUrl(final int i) {
         String id = mResidentIds.get(i).toString();
-        mNetworking.getResident(id, new Networking.ResidentDataListener() {
+        mNetworking.getResident(id, mPlanetName, new Networking.ResidentDataListener() {
             @Override
             public void onResponseError(String errorMessage) {
                 Log.e("response", errorMessage);
@@ -80,7 +82,7 @@ public class ResidentListActivity extends AppCompatActivity {
         LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
-        ResidentsAdapter ca = new ResidentsAdapter(createList(), mResidentIds);
+        ResidentsAdapter ca = new ResidentsAdapter(createList(), mResidentIds, mPlanetName);
         recList.setAdapter(ca);
     }
 
@@ -129,8 +131,10 @@ public class ResidentListActivity extends AppCompatActivity {
     private void openResidentList(){
         Intent intent = new Intent(this, ResidentListActivity.class);
         intent.putExtra("residentIds", mResidentIds);
+        intent.putExtra("planetName", mPlanetName);
         startActivity(intent);
     }
+
     // This method open MainActivity - first activity
     private void openPlanetKamino(){
         Intent intent = new Intent(this, MainActivity.class);

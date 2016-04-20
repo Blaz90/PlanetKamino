@@ -14,20 +14,17 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
-
 /**
  * Created by Blaž on 11.04.2016.
  */
 public class Networking extends Activity {
-    private final static String LOG_TAG = ".Networking";
 
+    private final static String LOG_TAG = ".Networking";
     private final static String API_BASE_URL = "http://private-anon-ffc6f083f-starwars2.apiary-mock.com/";
     private String API_REQ_URL;
 
-    private PlanetKamino mPlanetKamino;
-    private ResidentKamino mResidentKamino;
-    StringEntity entity;
-    ArrayList<String> mResidentIds;
+    private StringEntity entity;
+    private ArrayList<String> mResidentIds;
 
     public interface LikeDataListener {
         void onResponseError(String errorMessage);
@@ -44,12 +41,10 @@ public class Networking extends Activity {
         void onResidentResponseSuccess(ResidentKamino residentKamino);
     }
 
-
-    // API request call - get data
-    public void getPlanet(final PlanetDataListener dataListener) {
+    // API request call - get planet data
+    public void getPlanet(final String planetId, final PlanetDataListener dataListener) {
         String object = "planets";
-        String id = "10";
-        API_REQ_URL = API_BASE_URL + object + "/" + id;
+        API_REQ_URL = API_BASE_URL + object + "/" + planetId;
         // Make RESTful webservice call using AsyncHttpClient object
         AsyncHttpClient client = new AsyncHttpClient();
         hmacAuthentication(client);
@@ -62,14 +57,11 @@ public class Networking extends Activity {
                 try {
                     jsonData = new String(responseBody, "UTF-8"); // for UTF-8 encoding
 
-                    dataListener.onPlanetResponseSuccess(savePlanetData(jsonData));
+                    dataListener.onPlanetResponseSuccess(savePlanetData(jsonData, planetId));
 
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
+                } catch (UnsupportedEncodingException | JSONException e) {
                     e.printStackTrace();
                 }
-                //Log.e("server said", jsonData);
             }
 
             @Override
@@ -90,7 +82,8 @@ public class Networking extends Activity {
         });
     }
 
-    public void getResident(String residentId, final ResidentDataListener dataListener) {
+    // API request call - get resident data
+    public void getResident(String residentId, final String planetName,final ResidentDataListener dataListener) {
         String object = "residents";
         API_REQ_URL = API_BASE_URL + object + "/" + residentId;
         // Make RESTful webservice call using AsyncHttpClient object
@@ -105,14 +98,11 @@ public class Networking extends Activity {
                 try {
                     jsonData = new String(responseBody, "UTF-8"); // for UTF-8 encoding
 
-                    dataListener.onResidentResponseSuccess(saveResidentData(jsonData));
+                    dataListener.onResidentResponseSuccess(saveResidentData(jsonData, planetName));
 
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
+                } catch (UnsupportedEncodingException | JSONException e) {
                     e.printStackTrace();
                 }
-                //Log.e("server said", jsonData);
             }
 
             @Override
@@ -133,16 +123,13 @@ public class Networking extends Activity {
         });
     }
 
-
-
     // API request call - send data (like)
-    public void sendLike(final LikeDataListener dataListener) {
+    public void sendLike(String planetId, final LikeDataListener dataListener) {
         String object = "planets";
-        String id = "10";
         String like = "like";
-        API_REQ_URL = API_BASE_URL + object + "/" + id  + "/" + like;
+        API_REQ_URL = API_BASE_URL + object + "/" + planetId  + "/" + like;
         try {
-            entity = new StringEntity("{  'planet_id': "+ id +"}", "UTF-8");
+            entity = new StringEntity("{  'planet_id': "+ planetId +"}", "UTF-8");
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
             return;
@@ -158,7 +145,6 @@ public class Networking extends Activity {
                 Log.d("","jsonData: " + jsonData);
                 try {
                     jsonData = new String(responseBody, "UTF-8"); // for UTF-8 encoding
-                     //dataListener.onLikeResponseSuccess(mPlanetKamino);
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
@@ -187,11 +173,10 @@ public class Networking extends Activity {
         // and string header is HMAC for now
         String value = HMAC.sStringToHMACMD5("key", "abcd");
         client.addHeader("HMAC", value);
-        //Log.d("hmac",value);
     }
 
     // fill ResidentKamino object with data from API
-    private ResidentKamino saveResidentData(String jsonData) throws JSONException {
+    private ResidentKamino saveResidentData(String jsonData, String planetName) throws JSONException {
         JSONObject resident = new JSONObject(jsonData);
 
         ResidentKamino residentKamino = new ResidentKamino();
@@ -204,7 +189,7 @@ public class Networking extends Activity {
         residentKamino.setEyeColor(resident.getString("eye_color"));
         residentKamino.setBirthYear(resident.getString("birth_year"));
         residentKamino.setGender(resident.getString("gender"));
-        residentKamino.setHomeworld(resident.getString("homeworld"));
+        residentKamino.setHomeworld(planetName);
         residentKamino.setCreated(resident.getString("created"));
         residentKamino.setEdited(resident.getString("edited"));
         residentKamino.setImageUrl(resident.getString("image_url"));
@@ -213,11 +198,12 @@ public class Networking extends Activity {
     }
 
     // fill PlanetKamino object with data from API
-    private PlanetKamino savePlanetData(String jsonData) throws JSONException {
+    private PlanetKamino savePlanetData(String jsonData, String planetId) throws JSONException {
         JSONObject planet = new JSONObject(jsonData);
 
         PlanetKamino planetKamino = new PlanetKamino();
 
+        planetKamino.setId(planetId);
         planetKamino.setName(planet.getString("name"));
         planetKamino.setOrbitalPeriod(planet.getString("orbital_period"));
         planetKamino.setRotationPeriod(planet.getString("rotation_period"));
@@ -238,32 +224,6 @@ public class Networking extends Activity {
 
         return planetKamino;
     }
-
-    // fill PlanetKamino object with data from API
-    /*
-    private PlanetKamino getArrayIds(String jsonData) throws JSONException {
-        JSONObject residents = new JSONObject(jsonData);
-
-        PlanetKamino planetKamino = new PlanetKamino();
-
-        getResidentIds(residents);
-        planetKamino.setResidentIds(mResidentIds);
-        Log.d("planet kamino","array: " + mResidentIds);
-
-        return planetKamino;
-    }
-    */
-
-    /*private ResidentList getNamesAndPictures(String jsonData) throws JSONException{
-        JSONObject residents = new JSONObject(jsonData);
-        ResidentList residentKamino = new ResidentList();
-
-        ArrayList residentNames = new ArrayList();
-        residentNames.add(0, residents.getString("name"));
-        residentKamino.setResidentNames(residentNames);
-
-        return residentKamino;
-    }*/
 
     // get IDs from residents of planet, if ID is repeated do not write it in array
     private void getResidentIds(JSONObject jsonObject){
